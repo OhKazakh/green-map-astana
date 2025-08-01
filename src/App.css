@@ -1,3 +1,17 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+html {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background-color: #f7f9fc;
+  color: #333;
+}
+
 .App {
   text-align: center;
 }
@@ -14,14 +28,16 @@
 }
 
 .App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+  background: linear-gradient(135deg, #4caf50, #81c784);
+  padding: 20px;
+  text-align: center;
   color: white;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+  font-size: 2.5rem;
+  margin: 0;
 }
 
 .App-link {
@@ -35,4 +51,31 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.Map {
+  height: 100vh; /* Fill the entire viewport; footer overlays */
+  width: 100%;
+  min-height: 400px; /* Ensure minimum height for visibility */
+}
+
+@media (max-width: 768px) {
+  h1 {
+    font-size: 2rem;
+  }
+}
+
+.Map-container {
+  padding: 20px;
+}
+
+.App-footer {
+  background-color: #4caf50;
+  padding: 10px;
+  text-align: center;
+  color: white;
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+  box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
 }
