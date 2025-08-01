@@ -56,7 +56,20 @@ function App() {
   const forceMobile = matchMediaResult; // Direct use of media query result
   
   // Use responsive component selection
-  const ActiveComponent = (isMobile || forceMobile) ? Mobile : Map;
+  // TEMPORARY: Force mobile for testing
+  const ActiveComponent = Mobile; // Force mobile component
+  // const ActiveComponent = (isMobile || forceMobile) ? Mobile : Map;
+  
+  // Debug logging
+  console.log('=== MOBILE DETECTION DEBUG ===');
+  console.log('window.innerWidth:', window.innerWidth);
+  console.log('isMobile state:', isMobile);
+  console.log('forceMobile:', forceMobile);
+  console.log('matchMediaResult:', matchMediaResult);
+  console.log('breakpoint (640px):', 640);
+  console.log('should show mobile:', (isMobile || forceMobile));
+  console.log('active component:', (isMobile || forceMobile) ? 'Mobile' : 'Map');
+  console.log('================================');
   
   return (
     <div>
@@ -65,7 +78,7 @@ function App() {
         position: 'fixed',
         top: 0,
         right: 0,
-        background: (isMobile || forceMobile) ? 'red' : 'green',
+        background: 'red', // Force red for mobile
         color: 'white',
         padding: '8px 12px',
         fontSize: '16px',
@@ -73,7 +86,7 @@ function App() {
         zIndex: 9999,
         border: '2px solid white'
       }}>
-        {(isMobile || forceMobile) ? '📱 MOBILE' : '🖥️ DESKTOP'} (viewport: {window.innerWidth}px)
+        📱 MOBILE (FORCED) (viewport: {window.innerWidth}px)
       </div>
       <ActiveComponent {...commonProps} />
     </div>
