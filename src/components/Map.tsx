@@ -411,16 +411,16 @@ const MATERIAL_OPTIONS = [
 ];
 
 const MATERIAL_ICONS: Record<string, string> = {
-  All: '🔄',
-  Plastic: '🧴',
-  Bottles: '🍾',
-  Glass: '🧪',
-  Paper: '📄',
-  Metals: '🔩',
-  Batteries: '🔋',
-  'Industrial waste': '🏭',
-  'Aluminium cans': '🥫',
-  Clothes: '👕'
+  All: '/icons/all.png',
+  Plastic: '/icons/plastic.png',
+  Bottles: '/icons/bottles.png',
+  Glass: '/icons/glass.png',
+  Paper: '/icons/paper.png',
+  Metals: '/icons/metals.png',
+  Batteries: '/icons/batteries.png',
+  'Industrial waste': '/icons/industrial.png',
+  'Aluminium cans': '/icons/alucan.png',
+  Clothes: '/icons/clothes.png'
 };
 
 type Lang = 'en' | 'ru' | 'kz';
@@ -681,6 +681,7 @@ const Map: React.FC = () => {
     current.setZoom?.(z - 1);
   };
 
+
   const centerOnUser = () => {
     if (!navigator.geolocation || !mapRef.current) return;
     navigator.geolocation.getCurrentPosition(
@@ -724,18 +725,7 @@ const Map: React.FC = () => {
   return (
     <div style={{ position: 'relative', width: '100vw', height: '100dvh' }}>
       {/* Desktop debug indicator */}
-      <div style={{
-        position: 'fixed',
-        top: 50,
-        left: 0,
-        background: 'orange',
-        color: 'white',
-        padding: '4px 8px',
-        fontSize: '12px',
-        zIndex: 9998
-      }}>
-        DESKTOP COMPONENT ACTIVE
-      </div>
+
     <LoadScript
       key={lang}
       googleMapsApiKey="AIzaSyAmgx0ZaPWr71vBWcmFjWfnEdHpAik7D1U"
@@ -766,15 +756,24 @@ const Map: React.FC = () => {
               height: 40,
               borderRadius: '50%',
               border: 'none',
-              background: 'rgba(0,0,0,0.6)',
-              color: '#fff',
+              background: theme === 'dark' ? 'rgba(255,255,255,0.95)' : 'rgba(0,0,0,0.6)',
+              color: theme === 'dark' ? '#000' : '#fff',
               cursor: 'pointer',
               fontSize: 20,
               lineHeight: '20px',
               transition: 'transform 0.4s ease'
             }}
           >
-            {theme === 'dark' ? '☀️' : '🌙'}
+            <img 
+              src="/icons/theme.png" 
+              alt="Toggle theme"
+              style={{ 
+                width: 20, 
+                height: 20,
+                objectFit: 'contain',
+                filter: theme === 'light' ? 'brightness(0) invert(1)' : 'none'
+              }} 
+            />
           </button>
 
           <div style={{ position: 'relative' }}>
@@ -786,8 +785,8 @@ const Map: React.FC = () => {
                 height: 40,
                 borderRadius: '50%',
                 border: 'none',
-                background: 'rgba(0,0,0,0.6)',
-                color: '#fff',
+                background: theme === 'dark' ? 'rgba(255,255,255,0.95)' : 'rgba(0,0,0,0.6)',
+                color: theme === 'dark' ? '#000' : '#fff',
                 cursor: 'pointer',
                 fontSize: 14,
                 lineHeight: '20px'
@@ -817,8 +816,8 @@ const Map: React.FC = () => {
                       height: 40,
                       borderRadius: '50%',
                       border: 'none',
-                      background: 'rgba(0,0,0,0.6)',
-                      color: '#fff',
+                      background: theme === 'dark' ? 'rgba(255,255,255,0.95)' : 'rgba(0,0,0,0.6)',
+                      color: theme === 'dark' ? '#000' : '#fff',
                       cursor: 'pointer',
                       fontSize: 14,
                       lineHeight: '20px',
@@ -840,8 +839,8 @@ const Map: React.FC = () => {
             left: panelPos.x,
             top: panelPos.y,
             zIndex: 2500,
-            width: lang === 'ru' ? 340 : (lang === 'kz' ? 360 : 280),
-            padding: 12,
+            width: lang === 'ru' ? 420 : (lang === 'kz' ? 440 : 360),
+            padding: 20,
             background: theme === 'light' ? 'rgba(0,0,0,0.60)' : 'rgba(255,255,255,0.70)', 
             color: theme === 'light' ? '#fff' : 'inherit',
             border: '1px solid #ccc',
@@ -853,16 +852,26 @@ const Map: React.FC = () => {
           }}
         >
           <div
-            style={{ display: 'flex', alignItems: 'center', marginBottom: 8, cursor: 'move' }}
+            style={{ display: 'flex', alignItems: 'center', marginBottom: 16, cursor: 'move' }}
             onMouseDown={handlePanelMouseDown}
             onTouchStart={onTouchDragStart}
           >
-            <span style={{ fontSize: 16, fontWeight: 600 }}>{STRINGS[lang].filter}</span>
+            <span style={{ fontSize: 18, fontWeight: 600 }}>{STRINGS[lang].filter}</span>
           </div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2,minmax(0,1fr))', gap: 6 }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2,minmax(0,1fr))', gap: 12 }}>
             {['All', ...MATERIAL_OPTIONS].map(m => (
               <label key={m} style={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}>
-                <span style={{ fontSize: 18, marginRight: 6 }}>{MATERIAL_ICONS[m] ?? '♻️'}</span>
+                <img 
+                  src={MATERIAL_ICONS[m] ?? '/icons/all.png'} 
+                  alt={m}
+                  style={{ 
+                    width: 22, 
+                    height: 22, 
+                    marginRight: 8,
+                    objectFit: 'contain',
+                    filter: theme === 'light' ? 'brightness(0) invert(1)' : 'none'
+                  }} 
+                />
                 <input
                   type="radio"
                   checked={selectedMaterial === m}
@@ -1033,7 +1042,16 @@ const Map: React.FC = () => {
                       }}
                       aria-label="Close"
                     >
-                      ×
+                      <img 
+                  src="/icons/theme.png" 
+                  alt="Close"
+                  style={{ 
+                    width: 18, 
+                    height: 18,
+                    objectFit: 'contain',
+                    filter: theme === 'light' ? 'brightness(0) invert(1)' : 'none'
+                  }} 
+                />
                     </button>
                   </div>
                   <p style={{ margin: '0 0 8px 0', fontSize: 14 }}>{cur.info}</p>
@@ -1087,14 +1105,32 @@ const Map: React.FC = () => {
         className="w-10 h-10 rounded bg-black/70 border border-white/30 text-white flex items-center justify-center text-lg"
         title={isSatellite ? 'Map view' : 'Satellite view'}
       >
-        {isSatellite ? '🗺️' : '🛰️'}
+                        <img 
+                  src="/icons/satelite.png" 
+                  alt={isSatellite ? 'Map view' : 'Satellite view'}
+                  style={{ 
+                    width: 20, 
+                    height: 20,
+                    objectFit: 'contain',
+                    filter: theme === 'light' ? 'brightness(0) invert(1)' : 'none'
+                  }} 
+                />
       </button>
       <button
         onClick={centerOnUser}
         className="w-10 h-10 rounded bg-black/70 border border-white/30 text-white flex items-center justify-center text-lg"
         title={STRINGS[lang].myLocation}
       >
-        ◎
+                        <img 
+                  src="/icons/findme.png" 
+                  alt="My location"
+                  style={{ 
+                    width: 20, 
+                    height: 20,
+                    objectFit: 'contain',
+                    filter: theme === 'light' ? 'brightness(0) invert(1)' : 'none'
+                  }} 
+                />
       </button>
     </div>
   </div>

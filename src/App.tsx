@@ -1,14 +1,58 @@
+ // ✱ App.tsx
 import React, { useState, useEffect } from 'react';
 import './App.css';
+
+// correct relative paths (they live in src/components)
 import Map from './components/Map';
 import Mobile from './components/Mobile';
 import { locations as locationsData } from './data/locations';
 
+/* --- breakpoint logic (as before) --- */
+const useIsMobile = () => {
+  const [mobile, setMobile] = useState(false);
+  
+  useEffect(() => {
+    // Use CSS media query for more reliable responsive detection
+    const mediaQuery = window.matchMedia('(max-width: 768px)');
+    
+    const updateMobile = (e: MediaQueryListEvent | MediaQueryList) => {
+      setMobile(e.matches);
+    };
+    
+    // Set initial value
+    updateMobile(mediaQuery);
+    
+    // Listen for changes
+    mediaQuery.addEventListener('change', updateMobile);
+    
+    return () => {
+      mediaQuery.removeEventListener('change', updateMobile);
+    };
+  }, []);
+  
+  return mobile;
+};
+
+/* --- shared app-state --- */
 function App() {
-  const [lang, setLang] = useState<'en' | 'ru' | 'kz'>('en');
-  const [locations] = useState(locationsData);
+  const isMobile = useIsMobile();
+
+  const [lang, setLang] = useState<'en' | 'ru' | 'kz'>(() => {
+    if (typeof window !== 'undefined') {
+      return (localStorage.getItem('lang') as 'en' | 'ru' | 'kz') || 'en';
+    }
+    return 'en';
+  });
+  const [locations] = useState(locationsData);       // use shared locations data
   const [selectedMaterial, setSelectedMaterial] = useState('All');
-  const [selectedLocation, setSelectedLocation] = useState<string | null>(null);
+  const [selectedLocation, setSelectedLocation] = useState<number | null>(null);
+
+  // Save language to localStorage when it changes
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('lang', lang);
+    }
+  }, [lang]);
 
   const commonProps = {
     lang,
@@ -17,33 +61,20 @@ function App() {
     selectMaterial: setSelectedMaterial,
     selectedLocation,
     selectLocation: setSelectedLocation,
+    selectLang: setLang,
   };
 
-  // FORCE MOBILE COMPONENT FOR TESTING
-  const ActiveComponent = Mobile;
+  // Force mobile component for small viewports (for debugging)
+  const matchMediaResult = window.matchMedia('(max-width: 768px)').matches;
+  const forceMobile = matchMediaResult; // Direct use of media query result
+  
+  // Use responsive component selection
+  const ActiveComponent = (isMobile || forceMobile) ? Mobile : Map;
+  
 
-  console.log('=== TEST DEBUG ===');
-  console.log('Forcing Mobile component');
-  console.log('ActiveComponent:', ActiveComponent);
-  console.log('==================');
-
+  
   return (
     <div>
-      {/* Test indicator */}
-      <div style={{
-        position: 'fixed',
-        top: 0,
-        right: 0,
-        background: 'red',
-        color: 'white',
-        padding: '8px 12px',
-        fontSize: '16px',
-        fontWeight: 'bold',
-        zIndex: 9999,
-        border: '2px solid white'
-      }}>
-        🧪 TEST: FORCED MOBILE (viewport: {window.innerWidth}px)
-      </div>
       <ActiveComponent {...commonProps} />
     </div>
   );

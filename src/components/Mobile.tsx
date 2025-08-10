@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, useMemo, useCallback } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { GoogleMap, LoadScript, Marker, OverlayView } from '@react-google-maps/api';
 import MobileFilterFab from './MobileFilterFab';
 import { LocationItem } from '../data/locations';
@@ -151,8 +151,9 @@ interface Props {
   locations: LocationItem[];
   selectedMaterial: string;
   selectMaterial: (material: string) => void;
-  selectedLocation: string | null;
-  selectLocation: (location: string | null) => void;
+  selectedLocation: number | null;
+  selectLocation: (location: number | null) => void;
+  selectLang?: (lang: Lang) => void;
 }
 
 const Mobile: React.FC<Props> = ({
@@ -161,12 +162,22 @@ const Mobile: React.FC<Props> = ({
   selectedMaterial,
   selectMaterial,
   selectedLocation,
-  selectLocation
+  selectLocation,
+  selectLang
 }) => {
   const mapRef = React.useRef<google.maps.Map | null>(null);
   const [userPos, setUserPos] = useState<google.maps.LatLngLiteral | null>(null);
-  const [theme, setTheme] = useState<'dark' | 'light'>(() => (typeof window !== 'undefined' && localStorage.getItem('theme') === 'light' ? 'light' : 'dark'));
+  const [theme, setTheme] = useState<'dark' | 'light'>(() => {
+    if (typeof window !== 'undefined') {
+      const savedTheme = localStorage.getItem('theme');
+      return savedTheme === 'dark' ? 'dark' : 'light';
+    }
+    return 'light';
+  });
   const [isSatellite, setIsSatellite] = useState(false);
+  const [isClosing, setIsClosing] = useState(false);
+  const [langMenuOpen, setLangMenuOpen] = useState(false);
+  const [isMapLoading, setIsMapLoading] = useState(true);
 
   useEffect(() => {
     const id = 'pulse-keyframes';
@@ -182,8 +193,37 @@ const Mobile: React.FC<Props> = ({
   }, [theme]);
 
   const toggleTheme = () => {
-    setTheme(t => (t === 'dark' ? 'light' : 'dark'));
+    console.log('Current theme before toggle:', theme);
+    setTheme(t => {
+      const newTheme = t === 'dark' ? 'light' : 'dark';
+      console.log('New theme:', newTheme);
+      return newTheme;
+    });
   };
+
+  const toggleLangMenu = () => {
+    setLangMenuOpen(o => !o);
+  };
+
+  // Close language menu when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      const target = event.target as Element;
+      if (langMenuOpen && !target.closest('[data-lang-menu]')) {
+        setLangMenuOpen(false);
+      }
+    };
+
+    document.addEventListener('click', handleClickOutside);
+    return () => {
+      document.removeEventListener('click', handleClickOutside);
+    };
+  }, [langMenuOpen]);
+
+  // Reset loading state when language or theme changes
+  useEffect(() => {
+    setIsMapLoading(true);
+  }, [lang, theme]);
 
   const toggleSatellite = () => {
     setIsSatellite(s => !s);
@@ -225,66 +265,195 @@ const Mobile: React.FC<Props> = ({
     return locations.filter(l => l.materials.includes(selectedMaterial));
   }, [locations, selectedMaterial]);
 
-  const mapOptions = useMemo(() => ({
-    ...baseOptions,
-    mapTypeId: isSatellite ? 'hybrid' : 'roadmap',
-    styles: isSatellite ? satelliteStyle : (theme === 'dark' ? greenFirstStyle : lightStyle),
-  }), [theme, isSatellite]);
+  const mapOptions = useMemo(() => {
+    const styles = isSatellite ? satelliteStyle : (theme === 'dark' ? greenFirstStyle : lightStyle);
+    console.log('Map options - Theme:', theme, 'IsSatellite:', isSatellite, 'Style:', theme === 'dark' ? 'greenFirstStyle' : 'lightStyle');
+    return {
+      ...baseOptions,
+      mapTypeId: isSatellite ? 'hybrid' : 'roadmap',
+      styles: styles,
+    };
+  }, [theme, isSatellite]);
 
   const toggleLocation = (id: number) => {
-    const idString = id.toString();
-    if (selectedLocation === idString) {
+    if (selectedLocation === id) {
       selectLocation(null);
     } else {
-      selectLocation(idString);
+      selectLocation(id);
     }
+  };
+
+  const handleCloseInfo = () => {
+    setIsClosing(true);
+    setTimeout(() => {
+      selectLocation(null);
+      setIsClosing(false);
+    }, 300); // Match the animation duration
   };
 
   console.log('Mobile component rendering');
   console.log('Mobile props:', { lang, selectedMaterial, selectedLocation, locationsLength: locations.length });
   
+  const handleContainerClick = () => {
+    // Dispatch a custom event to close the filter panel
+    window.dispatchEvent(new CustomEvent('closeFilterPanel'));
+  };
+
   return (
-    <div style={{ position: 'relative', width: '100vw', height: '100dvh' }}>
+    <div 
+      style={{ position: 'relative', width: '100vw', height: '100dvh' }}
+      onClick={handleContainerClick}
+    >
+      {isMapLoading && (
+        <div style={{
+          position: 'absolute',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          zIndex: 9999,
+          background: 'rgba(255,255,255,0.9)',
+          padding: '20px',
+          borderRadius: '10px',
+          boxShadow: '0 4px 12px rgba(0,0,0,0.2)',
+          fontSize: '16px',
+          fontWeight: 'bold'
+        }}>
+          Loading map...
+        </div>
+      )}
       <LoadScript
-        key={lang}
+        key="google-maps-script"
         googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY || "AIzaSyAmgx0ZaPWr71vBWcmFjWfnEdHpAik7D1U"}
         language={lang}
         region="KZ"
+        onLoad={() => console.log('Google Maps script loaded successfully')}
+        onError={(error) => console.error('Google Maps script failed to load:', error)}
       >
         <GoogleMap
           onClick={() => {
             if (selectedLocation !== null) {
-              selectLocation(null);
+              handleCloseInfo();
             }
           }}
           mapContainerStyle={{ width: '100%', height: '100%' }}
           center={center}
           zoom={12}
           options={mapOptions}
-          onLoad={map => { mapRef.current = map; return undefined; }}
+          onLoad={map => { 
+            mapRef.current = map; 
+            setIsMapLoading(false);
+            return undefined; 
+          }}
         >
-          {/* Theme toggle */}
+          {/* Theme & Language toggles */}
           <div
-            style={{ position: 'absolute', top: 16, left: 16, zIndex: 2501, pointerEvents: 'auto' }}
+            style={{ 
+              position: 'absolute', 
+              top: 20, 
+              right: 20, 
+              zIndex: 1000, 
+              pointerEvents: 'auto',
+              display: 'flex',
+              flexDirection: 'column',
+              gap: 8
+            }}
           >
             <button
               onClick={toggleTheme}
               aria-label="Toggle theme"
               style={{
-                width: 40,
-                height: 40,
+                width: 48,
+                height: 48,
                 borderRadius: '50%',
                 border: 'none',
-                background: 'rgba(0,0,0,0.6)',
-                color: '#fff',
+                background: theme === 'dark' ? 'rgba(255,255,255,0.95)' : 'rgba(0,0,0,0.6)',
+                color: theme === 'dark' ? '#000' : '#fff',
                 cursor: 'pointer',
-                fontSize: 20,
-                lineHeight: '20px',
-                transition: 'transform 0.4s ease'
+                fontSize: 24,
+                lineHeight: '24px',
+                transition: 'transform 0.4s ease',
+                animation: 'fadeIn 0.5s ease-out'
               }}
             >
-              {theme === 'dark' ? '☀️' : '🌙'}
+                              <img 
+                  src="/icons/theme.png" 
+                  alt="Toggle theme"
+                  style={{ 
+                    width: 24, 
+                    height: 24,
+                    objectFit: 'contain',
+                    filter: theme === 'light' ? 'brightness(0) invert(1)' : 'none'
+                  }} 
+                />
             </button>
+            
+            <div style={{ position: 'relative' }} data-lang-menu>
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  toggleLangMenu();
+                }}
+                aria-label="Change language"
+                style={{
+                  width: 48,
+                  height: 48,
+                  borderRadius: '50%',
+                  border: 'none',
+                  background: theme === 'dark' ? 'rgba(255,255,255,0.95)' : 'rgba(0,0,0,0.6)',
+                  color: theme === 'dark' ? '#000' : '#fff',
+                  cursor: 'pointer',
+                  fontSize: 16,
+                  lineHeight: '24px',
+                  transition: 'transform 0.4s ease',
+                  animation: 'fadeIn 0.7s ease-out',
+                  fontWeight: 'bold'
+                }}
+              >
+                {lang.toUpperCase()}
+              </button>
+              {langMenuOpen && (
+                <div
+                  data-lang-menu
+                  style={{
+                    position: 'absolute',
+                    top: 56,
+                    left: 0,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: 8,
+                    background: 'transparent',
+                    padding: 0,
+                    pointerEvents: 'auto'
+                  }}
+                >
+                  {(['en', 'ru', 'kz'] as Lang[]).filter(code => code !== lang).map((code, i) => (
+                    <button
+                      key={code}
+                      onClick={(e) => { 
+                        e.stopPropagation();
+                        if (selectLang) selectLang(code); 
+                        setLangMenuOpen(false); 
+                      }}
+                      style={{
+                        width: 48,
+                        height: 48,
+                        borderRadius: '50%',
+                        border: 'none',
+                        background: theme === 'dark' ? 'rgba(255,255,255,0.95)' : 'rgba(0,0,0,0.6)',
+                        color: theme === 'dark' ? '#000' : '#fff',
+                        cursor: 'pointer',
+                        fontSize: 16,
+                        lineHeight: '24px',
+                        fontWeight: 'bold',
+                        animation: `fadeIn 0.2s ease-out ${i * 0.1}s both`
+                      }}
+                    >
+                      {code.toUpperCase()}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
           </div>
 
           {/* User location marker */}
@@ -321,7 +490,7 @@ const Mobile: React.FC<Props> = ({
           )}
 
           {/* Markers */}
-          {filteredLocations.map(location => {
+          {filteredLocations.map((location, index) => {
             const id = location.id;
             return (
               <Marker
@@ -348,9 +517,9 @@ const Mobile: React.FC<Props> = ({
             <div
               style={{
                 position: 'absolute',
-                bottom: 16,
+                bottom: 40,
                 left: 16,
-                right: 16,
+                right: 60,
                 zIndex: 2600,
                 background: 'rgba(255,255,255,0.95)',
                 border: '1px solid #ccc',
@@ -358,11 +527,12 @@ const Mobile: React.FC<Props> = ({
                 padding: 20,
                 boxShadow: '0 4px 12px rgba(0,0,0,0.25)',
                 maxHeight: '40vh',
-                overflowY: 'auto'
+                overflowY: 'auto',
+                animation: isClosing ? 'slideOutDown 0.3s ease-in' : 'slideInUp 0.3s ease-out'
               }}
             >
               {(() => {
-                const cur = locations.find(l => l.id.toString() === selectedLocation)!;
+                const cur = locations.find(l => l.id === selectedLocation)!;
                 return (
                   <>
                     <div
@@ -375,15 +545,18 @@ const Mobile: React.FC<Props> = ({
                     >
                       <h2 style={{ margin: 0, fontSize: 18 }}>{cur.name}</h2>
                       <button
-                        onClick={() => selectLocation(null)}
+                        onClick={handleCloseInfo}
                         style={{
                           border: 'none',
                           background: 'transparent',
                           fontSize: 22,
                           cursor: 'pointer',
-                          lineHeight: '14px'
+                          lineHeight: '14px',
+                          transition: 'all 0.2s ease'
                         }}
                         aria-label="Close"
+                        onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.2)'}
+                        onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
                       >
                         ×
                       </button>
@@ -415,46 +588,69 @@ const Mobile: React.FC<Props> = ({
         lang={lang}
         selectedMaterial={selectedMaterial}
         selectMaterial={selectMaterial}
+        theme={theme}
       />
 
       {/* Map Controls (zoom & my location) */}
       <div
         style={{
           position: 'absolute',
-          right: '16px',
-          bottom: '16px',
+          right: '8px',
+          bottom: '40px',
           display: 'flex',
           flexDirection: 'column',
           gap: '8px',
           zIndex: 2600,
         }}
       >
-        <button
-          onClick={zoomIn}
-          className="w-10 h-10 rounded bg-black/70 border border-white/30 text-white flex items-center justify-center text-lg"
-        >
-          +
-        </button>
-        <button
-          onClick={zoomOut}
-          className="w-10 h-10 rounded bg-black/70 border border-white/30 text-white flex items-center justify-center text-xl"
-        >
-          -
-        </button>
-        <button
-          onClick={toggleSatellite}
-          className="w-10 h-10 rounded bg-black/70 border border-white/30 text-white flex items-center justify-center text-lg"
-          title={isSatellite ? 'Map view' : 'Satellite view'}
-        >
-          {isSatellite ? '🗺️' : '🛰️'}
-        </button>
-        <button
-          onClick={centerOnUser}
-          className="w-10 h-10 rounded bg-black/70 border border-white/30 text-white flex items-center justify-center text-lg"
-          title={STRINGS[lang].myLocation}
-        >
-          ◎
-        </button>
+                  <button
+            onClick={zoomIn}
+            className="w-10 h-10 rounded bg-black/70 border border-white/30 text-white flex items-center justify-center text-lg transition-transform duration-200"
+            style={{ animation: 'bounceIn 0.5s ease-out' }}
+          >
+            +
+          </button>
+          <button
+            onClick={zoomOut}
+            className="w-10 h-10 rounded bg-black/70 border border-white/30 text-white flex items-center justify-center text-lg transition-transform duration-200"
+            style={{ animation: 'bounceIn 0.6s ease-out' }}
+          >
+            -
+          </button>
+          <button
+            onClick={toggleSatellite}
+            className="w-10 h-10 rounded bg-black/70 border border-white/30 text-white flex items-center justify-center text-lg transition-transform duration-200"
+            title={isSatellite ? 'Map view' : 'Satellite view'}
+            style={{ animation: 'bounceIn 0.7s ease-out' }}
+          >
+                            <img 
+                  src="/icons/satelite.png" 
+                  alt={isSatellite ? 'Map view' : 'Satellite view'}
+                  style={{ 
+                    width: 20, 
+                    height: 20,
+                    objectFit: 'contain',
+                    filter: theme === 'light' ? 'brightness(0) invert(1)' : 'none'
+                  }} 
+                />
+          </button>
+          <button
+            onClick={centerOnUser}
+            className="w-10 h-10 rounded bg-black/70 border border-white/30 text-white flex items-center justify-center text-lg transition-transform duration-200"
+            title={STRINGS[lang].myLocation}
+            style={{ animation: 'bounceIn 0.8s ease-out' }}
+          >
+                            <img 
+                  src="/icons/findme.png" 
+                  alt={STRINGS[lang].myLocation}
+                  style={{ 
+                    width: 20, 
+                    height: 20,
+                    objectFit: 'contain',
+                    filter: theme === 'light' ? 'brightness(0) invert(1)' : 'none'
+                  }} 
+                />
+          </button>
       </div>
     </div>
   );
