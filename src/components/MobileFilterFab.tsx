@@ -82,7 +82,7 @@ interface Props {
 const MobileFilterFab: React.FC<Props> = ({ lang, selectedMaterial, selectMaterial, theme }) => {
   console.log('MobileFilterFab rendering:', { lang, selectedMaterial });
   const [isExpanded, setIsExpanded] = useState(false);
-  const [pos] = useState({ x: 20, y: 20 });
+  const [pos] = useState({ x: 16, y: 20 }); // Moved slightly left to avoid overlap
 
   const onPointerDown = useCallback((e: React.PointerEvent) => {
     // Stop event from bubbling up to prevent immediate closure
@@ -165,7 +165,7 @@ const MobileFilterFab: React.FC<Props> = ({ lang, selectedMaterial, selectMateri
             padding: 16,
             boxShadow: '0 4px 12px rgba(0,0,0,0.25)',
             minWidth: 280,
-            maxWidth: 'calc(100vw - 80px)',
+            maxWidth: 'calc(100vw - 140px)', // Further reduced to ensure no overlap with buttons
             animation: 'slideInRight 0.3s ease-out'
           }}
         >
