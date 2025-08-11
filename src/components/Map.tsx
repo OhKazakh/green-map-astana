@@ -266,7 +266,7 @@ const locations = [
   {
     id: 11,
     category: "SMALL",
-    name: "Sparklo RVM (Kerren Mall sample)",
+    name: "Sparklo RVM (Keruen Mall)",
     position: { lat: 51.12802, lng: 71.425381 },
     info: "RVM in shopping mall; see app for full list. PET bottles, aluminium cans.",
     photo: null,
@@ -319,17 +319,7 @@ const locations = [
     materials: ["Bottles", "Aluminium cans", "Plastic"],
     audience: "Public drop-off"
   },
-  {
-    id: 16,
-    category: "SMALL",
-    name: "Sparklo RVM – Keruen Mall",
-    position: { lat: 51.1282, lng: 71.4254 }, // TODO verify
-    info: "Reverse-vending machine; earn points in Sparklo app. PET bottles & aluminium cans.",
-    photo: null,
-    icon: "",
-    materials: ["Bottles", "Aluminium cans", "Plastic"],
-    audience: "Public drop-off"
-  },
+
   {
     id: 17,
     category: "SMALL",
@@ -1057,16 +1047,7 @@ const Map: React.FC = () => {
                       }}
                       aria-label="Close"
                     >
-                      <img 
-                  src="/icons/theme.png" 
-                  alt="Close"
-                  style={{ 
-                    width: 18, 
-                    height: 18,
-                    objectFit: 'contain',
-                    filter: theme === 'light' ? 'brightness(0) invert(1)' : 'none'
-                  }} 
-                />
+                      ×
                     </button>
                   </div>
                   <p style={{ margin: '0 0 8px 0', fontSize: 14 }}>
