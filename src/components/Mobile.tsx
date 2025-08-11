@@ -2,6 +2,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { GoogleMap, LoadScript, Marker, OverlayView } from '@react-google-maps/api';
 import MobileFilterFab from './MobileFilterFab';
 import { LocationItem } from '../data/locations';
+import { locationTranslations } from '../data/translations';
 
 // Constants from Map.tsx
 const center = {
@@ -220,10 +221,10 @@ const Mobile: React.FC<Props> = ({
     };
   }, [langMenuOpen]);
 
-  // Reset loading state when language or theme changes
+  // Update local lang state when prop changes
   useEffect(() => {
     setIsMapLoading(true);
-  }, [lang, theme]);
+  }, [lang]);
 
   const toggleSatellite = () => {
     setIsSatellite(s => !s);
@@ -533,6 +534,9 @@ const Mobile: React.FC<Props> = ({
             >
               {(() => {
                 const cur = locations.find(l => l.id === selectedLocation)!;
+                const translations = locationTranslations[cur.name];
+                const currentLang = translations ? translations[lang] : null;
+                
                 return (
                   <>
                     <div
@@ -543,7 +547,9 @@ const Mobile: React.FC<Props> = ({
                         marginBottom: 8
                       }}
                     >
-                      <h2 style={{ margin: 0, fontSize: 18 }}>{cur.name}</h2>
+                      <h2 style={{ margin: 0, fontSize: 18 }}>
+                        {currentLang?.name || cur.name}
+                      </h2>
                       <button
                         onClick={handleCloseInfo}
                         style={{
@@ -561,10 +567,12 @@ const Mobile: React.FC<Props> = ({
                         ×
                       </button>
                     </div>
-                    <p style={{ margin: '0 0 8px 0', fontSize: 14 }}>{cur.info}</p>
+                    <p style={{ margin: '0 0 8px 0', fontSize: 14 }}>
+                      {currentLang?.info || cur.info}
+                    </p>
                     {cur.audience && (
                       <p style={{ margin: '0 0 8px 0', fontSize: 12, color: '#555' }}>
-                        {STRINGS[lang].for}: {cur.audience}
+                        {STRINGS[lang].for}: {currentLang?.audience || cur.audience}
                       </p>
                     )}
                     <div style={{ fontSize: 12, marginTop: 8 }}>

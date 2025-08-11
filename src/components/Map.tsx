@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect, useMemo, useCallback } from 'react';
 import { GoogleMap, LoadScript, Marker, OverlayView } from '@react-google-maps/api';
+import { locationTranslations } from '../data/translations';
 
 
 const center = {
@@ -974,20 +975,27 @@ const Map: React.FC = () => {
               />
               {(() => {
                 const cur = locations.find(l => l.id === hovered)!;
+                const translations = locationTranslations[cur.name];
+                const currentLang = translations ? translations[lang] : null;
+                
                 return (
                   <>
-                    <h3 style={{ margin: '0 0 8px 0' }}>{cur.name}</h3>
+                    <h3 style={{ margin: '0 0 8px 0' }}>
+                      {currentLang?.name || cur.name}
+                    </h3>
                     {cur.photo && (
                       <img
                         src={cur.photo}
-                        alt={cur.name}
+                        alt={currentLang?.name || cur.name}
                         style={{ width: 100, borderRadius: 8, marginBottom: 8 }}
                       />
                     )}
-                    <p style={{ margin: 0 }}>{cur.info}</p>
+                    <p style={{ margin: 0 }}>
+                      {currentLang?.info || cur.info}
+                    </p>
                     {cur.audience && (
                       <p style={{ margin: '4px 0 0 0', fontSize: 12, color: '#555' }}>
-                        {STRINGS[lang].for}: {cur.audience}
+                        {STRINGS[lang].for}: {currentLang?.audience || cur.audience}
                       </p>
                     )}
                   </>
@@ -1020,6 +1028,9 @@ const Map: React.FC = () => {
           >
             {(() => {
               const cur = locations.find(l => l.id === selectedLocation)!;
+              const translations = locationTranslations[cur.name];
+              const currentLang = translations ? translations[lang] : null;
+              
               return (
                 <>
                   <div
@@ -1030,7 +1041,9 @@ const Map: React.FC = () => {
                       marginBottom: 8
                     }}
                   >
-                    <h2 style={{ margin: 0, fontSize: 20 }}>{cur.name}</h2>
+                    <h2 style={{ margin: 0, fontSize: 20 }}>
+                      {currentLang?.name || cur.name}
+                    </h2>
                     <button
                       onClick={closeInfo}
                       style={{
@@ -1054,10 +1067,12 @@ const Map: React.FC = () => {
                 />
                     </button>
                   </div>
-                  <p style={{ margin: '0 0 8px 0', fontSize: 14 }}>{cur.info}</p>
+                  <p style={{ margin: '0 0 8px 0', fontSize: 14 }}>
+                    {currentLang?.info || cur.info}
+                  </p>
                   {cur.audience && (
                     <p style={{ margin: '0 0 8px 0', fontSize: 12, color: '#555' }}>
-                      {STRINGS[lang].for}: {cur.audience}
+                      {STRINGS[lang].for}: {currentLang?.audience || cur.audience}
                     </p>
                   )}
                   <div style={{ fontSize: 12, marginTop: 8 }}>
