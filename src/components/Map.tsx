@@ -1031,6 +1031,17 @@ const Map: React.FC = () => {
               const translations = locationTranslations[cur.name];
               const currentLang = translations ? translations[lang] : null;
               
+              // Debug logging to see what's happening with translations
+              console.log('Map Location translations debug:', {
+                locationName: cur.name,
+                hasTranslations: !!translations,
+                translations: translations,
+                currentLang: currentLang,
+                fallbackName: cur.name,
+                fallbackInfo: cur.info,
+                fallbackAudience: cur.audience
+              });
+              
               return (
                 <>
                   <div
