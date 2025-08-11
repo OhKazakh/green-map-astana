@@ -635,8 +635,8 @@ const Map: React.FC = () => {
         setIsPanelClosing(false);
         panelTimer.current = null;
       }, 250);                 // matches CSS duration
-    } else if (selectedLocation === null) {
-      // open a new panel only if none is open
+    } else {
+      // Always open new panel, even if another is open
       setSelectedLocation(id);
     }
   };
@@ -1031,16 +1031,7 @@ const Map: React.FC = () => {
               const translations = locationTranslations[cur.name];
               const currentLang = translations ? translations[lang] : null;
               
-              // Debug logging to see what's happening with translations
-              console.log('Map Location translations debug:', {
-                locationName: cur.name,
-                hasTranslations: !!translations,
-                translations: translations,
-                currentLang: currentLang,
-                fallbackName: cur.name,
-                fallbackInfo: cur.info,
-                fallbackAudience: cur.audience
-              });
+
               
               return (
                 <>
