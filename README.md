@@ -4,7 +4,7 @@ An interactive web application that helps you find recycling locations in Astana
 
 ## 🚀 Live App
 
-**Visit the app:** [Green Map Astana](greenmap-astana.vercel.app)
+**Visit the app:** [Green Map Astana](https://greenmap-astana.vercel.app/)
 
 ## ✨ What You Can Do
 
