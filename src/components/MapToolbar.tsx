@@ -25,19 +25,24 @@ const MapToolbar: React.FC<MapToolbarProps> = ({
       <button
         onClick={onZoomIn}
         className="map-toolbar-button"
+        aria-label="Zoom in"
+        title="Zoom in"
       >
         +
       </button>
       <button
         onClick={onZoomOut}
         className="map-toolbar-button zoom-out"
+        aria-label="Zoom out"
+        title="Zoom out"
       >
         −
       </button>
       <button
         onClick={onToggleSatellite}
         className="map-toolbar-button"
-        title={isSatellite ? 'Map view' : 'Satellite view'}
+        title={isSatellite ? 'Switch to map view' : 'Switch to satellite view'}
+        aria-label={isSatellite ? 'Switch to map view' : 'Switch to satellite view'}
       >
         <img 
           src="/icons/satelite.png" 
@@ -49,6 +54,7 @@ const MapToolbar: React.FC<MapToolbarProps> = ({
         onClick={onCenterOnUser}
         className="map-toolbar-button"
         title={myLocationText}
+        aria-label={myLocationText}
       >
         <img 
           src="/icons/findme.png" 
