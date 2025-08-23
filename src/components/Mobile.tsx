@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { GoogleMap, LoadScript, Marker, OverlayView } from '@react-google-maps/api';
-import MobileFilterFab from './MobileFilterFab';
-import { LocationItem } from '../data/locations';
 import { locationTranslations } from '../data/translations';
+import { LocationItem, STRINGS } from '../constants/mapConstants';
+import MobileFilterFab from './MobileFilterFab';
+import './Map.css';
 
 // Constants from Map.tsx
 const center = {
@@ -141,11 +142,6 @@ const baseOptions: google.maps.MapOptions = {
 // Locations data is now imported from ../data/locations
 
 type Lang = 'en' | 'ru' | 'kz';
-const STRINGS: Record<Lang, Record<string, string>> = {
-  en: { filter: 'Filter', for: 'For', materialsList: 'Materials:', myLocation: 'My location' },
-  ru: { filter: 'Фильтр', for: 'Для', materialsList: 'Материалы:', myLocation: 'Моё местоположение' },
-  kz: { filter: 'Сүзгі', for: 'Кімге', materialsList: 'Материалдар:', myLocation: 'Орналасқан жерім' },
-};
 
 interface Props {
   lang: Lang;
@@ -190,14 +186,16 @@ const Mobile: React.FC<Props> = ({
   }, []);
 
   useEffect(() => {
-    try { localStorage.setItem('theme', theme); } catch {}
+    try { 
+      localStorage.setItem('theme', theme); 
+    } catch (error) {
+      console.warn('Failed to save theme preference:', error);
+    }
   }, [theme]);
 
   const toggleTheme = () => {
-    console.log('Current theme before toggle:', theme);
     setTheme(t => {
       const newTheme = t === 'dark' ? 'light' : 'dark';
-      console.log('New theme:', newTheme);
       return newTheme;
     });
   };
@@ -254,7 +252,7 @@ const Mobile: React.FC<Props> = ({
         mapRef.current?.setZoom?.(15);
       },
       () => {
-        // silently ignore errors for now
+        // Geolocation error - user may have denied permission
       }
     );
   };
@@ -268,7 +266,6 @@ const Mobile: React.FC<Props> = ({
 
   const mapOptions = useMemo(() => {
     const styles = isSatellite ? satelliteStyle : (theme === 'dark' ? greenFirstStyle : lightStyle);
-    console.log('Map options - Theme:', theme, 'IsSatellite:', isSatellite, 'Style:', theme === 'dark' ? 'greenFirstStyle' : 'lightStyle');
     return {
       ...baseOptions,
       mapTypeId: isSatellite ? 'hybrid' : 'roadmap',
@@ -278,10 +275,8 @@ const Mobile: React.FC<Props> = ({
 
   const toggleLocation = (id: number) => {
     if (selectedLocation === id) {
-      // If clicking the same location, close it
       selectLocation(null);
     } else {
-      // If clicking a different location, close current and open new one
       selectLocation(id);
     }
   };
@@ -294,9 +289,6 @@ const Mobile: React.FC<Props> = ({
     }, 300); // Match the animation duration
   };
 
-  console.log('Mobile component rendering');
-  console.log('Mobile props:', { lang, selectedMaterial, selectedLocation, locationsLength: locations.length });
-  
   const handleContainerClick = () => {
     // Dispatch a custom event to close the filter panel
     window.dispatchEvent(new CustomEvent('closeFilterPanel'));
@@ -304,23 +296,11 @@ const Mobile: React.FC<Props> = ({
 
   return (
     <div 
-      style={{ position: 'relative', width: '100vw', height: '100dvh' }}
+      className="mobile-container"
       onClick={handleContainerClick}
     >
       {isMapLoading && (
-        <div style={{
-          position: 'absolute',
-          top: '50%',
-          left: '50%',
-          transform: 'translate(-50%, -50%)',
-          zIndex: 9999,
-          background: 'rgba(255,255,255,0.9)',
-          padding: '20px',
-          borderRadius: '10px',
-          boxShadow: '0 4px 12px rgba(0,0,0,0.2)',
-          fontSize: '16px',
-          fontWeight: 'bold'
-        }}>
+        <div className="mobile-loading">
           Loading map...
         </div>
       )}
@@ -329,8 +309,8 @@ const Mobile: React.FC<Props> = ({
         googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY || "AIzaSyAmgx0ZaPWr71vBWcmFjWfnEdHpAik7D1U"}
         language={lang}
         region="KZ"
-        onLoad={() => console.log('Google Maps script loaded successfully')}
-        onError={(error) => console.error('Google Maps script failed to load:', error)}
+        onLoad={() => {}}
+        onError={() => {}}
       >
         <GoogleMap
           onClick={() => {
@@ -349,45 +329,17 @@ const Mobile: React.FC<Props> = ({
           }}
         >
           {/* Theme & Language toggles */}
-          <div
-            style={{ 
-              position: 'absolute', 
-              top: 20, 
-              right: 20, 
-              zIndex: 1000, 
-              pointerEvents: 'auto',
-              display: 'flex',
-              flexDirection: 'column',
-              gap: 8
-            }}
-          >
+          <div className="mobile-controls">
             <button
               onClick={toggleTheme}
               aria-label="Toggle theme"
-              style={{
-                width: 48,
-                height: 48,
-                borderRadius: '50%',
-                border: 'none',
-                background: theme === 'dark' ? 'rgba(255,255,255,0.95)' : 'rgba(0,0,0,0.6)',
-                color: theme === 'dark' ? '#000' : '#fff',
-                cursor: 'pointer',
-                fontSize: 24,
-                lineHeight: '24px',
-                transition: 'transform 0.4s ease',
-                animation: 'fadeIn 0.5s ease-out'
-              }}
+              className={`mobile-control-button theme ${theme}`}
             >
-                              <img 
-                  src="/icons/theme.png" 
-                  alt="Toggle theme"
-                  style={{ 
-                    width: 24, 
-                    height: 24,
-                    objectFit: 'contain',
-                    filter: theme === 'light' ? 'brightness(0) invert(1)' : 'none'
-                  }} 
-                />
+              <img 
+                src="/icons/theme.png" 
+                alt="Toggle theme"
+                className={`mobile-control-icon ${theme === 'light' ? 'light' : ''}`}
+              />
             </button>
             
             <div style={{ position: 'relative' }} data-lang-menu>
@@ -397,38 +349,12 @@ const Mobile: React.FC<Props> = ({
                   toggleLangMenu();
                 }}
                 aria-label="Change language"
-                style={{
-                  width: 48,
-                  height: 48,
-                  borderRadius: '50%',
-                  border: 'none',
-                  background: theme === 'dark' ? 'rgba(255,255,255,0.95)' : 'rgba(0,0,0,0.6)',
-                  color: theme === 'dark' ? '#000' : '#fff',
-                  cursor: 'pointer',
-                  fontSize: 16,
-                  lineHeight: '24px',
-                  transition: 'transform 0.4s ease',
-                  animation: 'fadeIn 0.7s ease-out',
-                  fontWeight: 'bold'
-                }}
+                className={`mobile-control-button lang ${theme}`}
               >
                 {lang.toUpperCase()}
               </button>
               {langMenuOpen && (
-                <div
-                  data-lang-menu
-                  style={{
-                    position: 'absolute',
-                    top: 56,
-                    left: 0,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    gap: 8,
-                    background: 'transparent',
-                    padding: 0,
-                    pointerEvents: 'auto'
-                  }}
-                >
+                <div className="mobile-lang-menu">
                   {(['en', 'ru', 'kz'] as Lang[]).filter(code => code !== lang).map((code, i) => (
                     <button
                       key={code}
@@ -437,19 +363,7 @@ const Mobile: React.FC<Props> = ({
                         if (selectLang) selectLang(code); 
                         setLangMenuOpen(false); 
                       }}
-                      style={{
-                        width: 48,
-                        height: 48,
-                        borderRadius: '50%',
-                        border: 'none',
-                        background: theme === 'dark' ? 'rgba(255,255,255,0.95)' : 'rgba(0,0,0,0.6)',
-                        color: theme === 'dark' ? '#000' : '#fff',
-                        cursor: 'pointer',
-                        fontSize: 16,
-                        lineHeight: '24px',
-                        fontWeight: 'bold',
-                        animation: `fadeIn 0.2s ease-out ${i * 0.1}s both`
-                      }}
+                      className={`mobile-lang-option ${theme}`}
                     >
                       {code.toUpperCase()}
                     </button>
@@ -474,20 +388,7 @@ const Mobile: React.FC<Props> = ({
                 }}
               />
               <OverlayView position={userPos} mapPaneName={OverlayView.OVERLAY_MOUSE_TARGET}>
-                <div
-                  style={{
-                    width: 32,
-                    height: 32,
-                    borderRadius: '50%',
-                    backgroundColor: 'rgba(0,170,255,0.45)',
-                    position: 'absolute',
-                    left: '50%',
-                    top: '50%',
-                    transform: 'translate(-50%, -50%)',
-                    animation: 'pulseDot 2s ease-out infinite',
-                    pointerEvents: 'none'
-                  }}
-                />
+                <div className="mobile-user-location-pulse" />
               </OverlayView>
             </>
           )}
@@ -518,21 +419,7 @@ const Mobile: React.FC<Props> = ({
           {/* Click panel (mobile info panel) */}
           {selectedLocation !== null && (
             <div
-              style={{
-                position: 'absolute',
-                bottom: 40,
-                left: 16,
-                right: 60,
-                zIndex: 2600,
-                background: 'rgba(255,255,255,0.95)',
-                border: '1px solid #ccc',
-                borderRadius: 10,
-                padding: 20,
-                boxShadow: '0 4px 12px rgba(0,0,0,0.25)',
-                maxHeight: '40vh',
-                overflowY: 'auto',
-                animation: isClosing ? 'slideOutDown 0.3s ease-in' : 'slideInUp 0.3s ease-out'
-              }}
+              className={`mobile-info-panel ${isClosing ? 'slide-out' : 'slide-in'}`}
             >
               {(() => {
                 const cur = locations.find(l => l.id === selectedLocation)!;
@@ -543,45 +430,29 @@ const Mobile: React.FC<Props> = ({
                 
                 return (
                   <>
-                    <div
-                      style={{
-                        display: 'flex',
-                        justifyContent: 'space-between',
-                        alignItems: 'center',
-                        marginBottom: 8
-                      }}
-                    >
-                      <h2 style={{ margin: 0, fontSize: 18 }}>
+                    <div className="mobile-info-header">
+                      <h2 className="mobile-info-title">
                         {currentLang?.name || cur.name}
                       </h2>
                       <button
                         onClick={handleCloseInfo}
-                        style={{
-                          border: 'none',
-                          background: 'transparent',
-                          fontSize: 22,
-                          cursor: 'pointer',
-                          lineHeight: '14px',
-                          transition: 'all 0.2s ease'
-                        }}
+                        className="mobile-info-close"
                         aria-label="Close"
-                        onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.2)'}
-                        onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
                       >
                         ×
                       </button>
                     </div>
-                    <p style={{ margin: '0 0 8px 0', fontSize: 14 }}>
+                    <p className="mobile-info-description">
                       {currentLang?.info || cur.info}
                     </p>
                     {cur.audience && (
-                      <p style={{ margin: '0 0 8px 0', fontSize: 12, color: '#555' }}>
+                      <p className="mobile-info-audience">
                         {STRINGS[lang].for}: {currentLang?.audience || cur.audience}
                       </p>
                     )}
-                    <div style={{ fontSize: 12, marginTop: 8 }}>
+                    <div className="mobile-info-materials">
                       <strong>{STRINGS[lang].materialsList}</strong>
-                      <ul style={{ paddingLeft: 18, margin: '4px 0' }}>
+                      <ul>
                         {cur.materials.map(m => (
                           <li key={m}>{m}</li>
                         ))}
@@ -604,65 +475,41 @@ const Mobile: React.FC<Props> = ({
       />
 
       {/* Map Controls (zoom & my location) */}
-      <div
-        style={{
-          position: 'absolute',
-          right: '8px',
-          bottom: '40px',
-          display: 'flex',
-          flexDirection: 'column',
-          gap: '8px',
-          zIndex: 2600,
-        }}
-      >
-                  <button
-            onClick={zoomIn}
-            className="w-10 h-10 rounded bg-black/70 border border-white/30 text-white flex items-center justify-center text-lg transition-transform duration-200"
-            style={{ animation: 'bounceIn 0.5s ease-out' }}
-          >
-            +
-          </button>
-          <button
-            onClick={zoomOut}
-            className="w-10 h-10 rounded bg-black/70 border border-white/30 text-white flex items-center justify-center text-lg transition-transform duration-200"
-            style={{ animation: 'bounceIn 0.6s ease-out' }}
-          >
-            -
-          </button>
-          <button
-            onClick={toggleSatellite}
-            className="w-10 h-10 rounded bg-black/70 border border-white/30 text-white flex items-center justify-center text-lg transition-transform duration-200"
-            title={isSatellite ? 'Map view' : 'Satellite view'}
-            style={{ animation: 'bounceIn 0.7s ease-out' }}
-          >
-                            <img 
-                  src="/icons/satelite.png" 
-                  alt={isSatellite ? 'Map view' : 'Satellite view'}
-                  style={{ 
-                    width: 20, 
-                    height: 20,
-                    objectFit: 'contain',
-                    filter: theme === 'light' ? 'brightness(0) invert(1)' : 'none'
-                  }} 
-                />
-          </button>
-          <button
-            onClick={centerOnUser}
-            className="w-10 h-10 rounded bg-black/70 border border-white/30 text-white flex items-center justify-center text-lg transition-transform duration-200"
-            title={STRINGS[lang].myLocation}
-            style={{ animation: 'bounceIn 0.8s ease-out' }}
-          >
-                            <img 
-                  src="/icons/findme.png" 
-                  alt={STRINGS[lang].myLocation}
-                  style={{ 
-                    width: 20, 
-                    height: 20,
-                    objectFit: 'contain',
-                    filter: theme === 'light' ? 'brightness(0) invert(1)' : 'none'
-                  }} 
-                />
-          </button>
+      <div className="mobile-map-controls">
+        <button
+          onClick={zoomIn}
+          className="mobile-map-control-button bounce-1"
+        >
+          +
+        </button>
+        <button
+          onClick={zoomOut}
+          className="mobile-map-control-button bounce-2"
+        >
+          -
+        </button>
+        <button
+          onClick={toggleSatellite}
+          className="mobile-map-control-button bounce-3"
+          title={isSatellite ? 'Map view' : 'Satellite view'}
+        >
+          <img 
+            src="/icons/satelite.png" 
+            alt={isSatellite ? 'Map view' : 'Satellite view'}
+            className={`mobile-map-control-icon ${theme === 'light' ? 'light' : ''}`}
+          />
+        </button>
+        <button
+          onClick={centerOnUser}
+          className="mobile-map-control-button bounce-4"
+          title={STRINGS[lang].myLocation}
+        >
+          <img 
+            src="/icons/findme.png" 
+            alt={STRINGS[lang].myLocation}
+            className={`mobile-map-control-icon ${theme === 'light' ? 'light' : ''}`}
+          />
+        </button>
       </div>
     </div>
   );

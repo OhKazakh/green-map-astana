@@ -1,70 +1,145 @@
-# Getting Started with Create React App
+# 🌍 Green Map - Astana Recycling Locations
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+An interactive web application that helps you find recycling locations in Astana, Kazakhstan. Discover where to recycle plastic, paper, glass, metals, and more!
 
-## Available Scripts
+## 🚀 Live App
 
-In the project directory, you can run:
+**Visit the app:** [Green Map Astana](https://green-map-danials-projects-7889295d.vercel.app)
 
-### `npm start`
+## ✨ What You Can Do
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### 🗺️ **Explore the Map**
+- **Interactive Map**: Navigate around Astana to see recycling locations
+- **Location Markers**: Click on markers to see recycling center details
+- **Zoom & Pan**: Use mouse/touch to explore different areas
+- **Satellite View**: Toggle between map and satellite views
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### 🔍 **Find Recycling Centers**
+- **Material Filtering**: Filter locations by what you want to recycle:
+  - ♻️ **Plastic** (PET bottles, containers)
+  - 📄 **Paper** (cardboard, office paper)
+  - 🥫 **Metals** (aluminum cans, scrap metal)
+  - 🍾 **Glass** (bottles, containers)
+  - 🔋 **Batteries** (lead-acid, household)
+  - 🏭 **Industrial Waste** (businesses only)
 
-### `npm test`
+### 📱 **Mobile-Friendly Features**
+- **Touch Controls**: Swipe and tap to navigate
+- **Mobile Panel**: Easy-to-use filter panel on mobile
+- **Responsive Design**: Works perfectly on all devices
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### 🌓 **Personalize Your Experience**
+- **Theme Toggle**: Switch between dark and light themes
+- **Language Support**: Use in English, Russian, or Kazakh
+- **Your Location**: Find recycling centers near you
 
-### `npm run build`
+## 🎯 How to Use the App
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### 1. **Open the Map**
+- Visit the app in your browser
+- The map will load showing Astana with recycling locations
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### 2. **Find Your Area**
+- **Zoom in/out**: Use the + and - buttons on the right
+- **Move around**: Click and drag to pan the map
+- **Your location**: Click the location button to center on you
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### 3. **Filter Locations**
+- **Desktop**: Use the filter panel on the left side
+- **Mobile**: Tap the filter button (⚙️) in the top-left
+- **Select materials**: Choose what you want to recycle
+- **View results**: See only relevant locations on the map
 
-### `npm run eject`
+### 4. **Get Location Details**
+- **Click any marker** on the map
+- **View information**:
+  - Name and description
+  - What materials they accept
+  - Who can use it (public or business only)
+  - Contact details (if available)
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### 5. **Navigate to Locations**
+- **Get directions**: Use the location info to find the address
+- **Plan your trip**: See the exact coordinates and area
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## 🏢 Types of Recycling Centers
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### **Public Drop-off Points** 🏠
+- **LS Ecolife Kiosks**: Staffed locations accepting various materials
+- **Sparklo RVMs**: Reverse vending machines for bottles and cans
+- **Municipal Centers**: City-run recycling facilities
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+### **Business/Bulk Only** 🏭
+- **Industrial Facilities**: Large-scale recycling plants
+- **Scrap Buyers**: Metal and material collection centers
+- **Specialized Services**: Paper, cardboard, and industrial waste
 
-## Learn More
+## 🌍 Language Support
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+The app is available in three languages:
+- 🇬🇧 **English** - Default language
+- 🇷🇺 **Russian** - Русский
+- 🇰🇿 **Kazakh** - Қазақша
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Your language preference is automatically saved.
 
-### Code Splitting
+## 📱 Mobile vs Desktop
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+### **Desktop Features**
+- Large filter panel on the left
+- Hover effects on map markers
+- Full keyboard and mouse support
+- Larger map view
 
-### Analyzing the Bundle Size
+### **Mobile Features**
+- Touch-optimized interface
+- Swipe gestures for panels
+- Mobile-specific filter button
+- Optimized for small screens
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+## 🔧 Troubleshooting
 
-### Making a Progressive Web App
+### **Map Not Loading?**
+- Check your internet connection
+- Try refreshing the page
+- Ensure JavaScript is enabled
+- Check if you're using a supported browser
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+### **Can't Find Your Location?**
+- Allow location access when prompted
+- Check your device's location settings
+- Try the manual zoom and pan controls
 
-### Advanced Configuration
+### **App Looks Strange?**
+- Try refreshing the page
+- Check if you're using a modern browser
+- Clear your browser cache
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+## 🌟 Tips for Best Experience
 
-### Deployment
+1. **Use the filters** to find exactly what you need
+2. **Zoom in** to see more detailed area information
+3. **Try both themes** to see which you prefer
+4. **Use your location** to find nearby centers
+5. **Check material types** before visiting a location
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+## 📞 Need Help?
 
-### `npm run build` fails to minify
+If you have questions about using the app:
+- Check the troubleshooting section above
+- Try refreshing the page
+- Contact us through the app
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## 🌱 About Green Map
+
+Green Map helps make recycling easier in Astana by:
+- **Connecting people** with recycling opportunities
+- **Promoting sustainability** in our community
+- **Making information accessible** in multiple languages
+- **Supporting local recycling** initiatives
+
+---
+
+**Made with 💚 for a cleaner Astana**
+
+*Find recycling locations, reduce waste, and help build a sustainable future!*
