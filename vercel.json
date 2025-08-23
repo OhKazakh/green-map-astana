@@ -5,11 +5,6 @@
   "installCommand": "npm install",
   "devCommand": "npm start",
   "regions": ["iad1"],
-  "functions": {
-    "app/api/**/*.js": {
-      "maxDuration": 10
-    }
-  },
   "headers": [
     {
       "source": "/static/(.*)",
