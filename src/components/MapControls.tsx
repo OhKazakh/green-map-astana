@@ -29,11 +29,7 @@ const MapControls: React.FC<MapControlsProps> = ({
         aria-label="Toggle theme"
         className={`map-control-button theme ${theme}`}
       >
-        <img 
-          src="/icons/theme.png" 
-          alt="Toggle theme"
-          className={`map-control-icon ${theme === 'light' ? 'light' : ''}`}
-        />
+        {theme === 'dark' ? '☀️' : '🌙'}
       </button>
 
       <div style={{ position: 'relative' }}>
