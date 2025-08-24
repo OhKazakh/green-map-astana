@@ -788,6 +788,11 @@
   z-index: 2501;
 }
 
+.mobile-controls-top {
+  display: flex;
+  gap: 8px;
+}
+
 .mobile-control-button {
   width: 40px;
   height: 40px;

@@ -323,46 +323,48 @@ const Mobile: React.FC<Props> = ({
           }}
         >
           <div className="mobile-controls">
-            <button
-              onClick={toggleTheme}
-              aria-label="Toggle theme"
-              className={`mobile-control-button theme ${theme}`}
-            >
-              <img 
-                src="/icons/tchange.png" 
-                alt="Theme" 
-                className="mobile-control-icon"
-              />
-            </button>
-            
-            <div style={{ position: 'relative' }} data-lang-menu>
+            <div className="mobile-controls-top">
               <button
-                onClick={(e) => {
-                  e.stopPropagation();
-                  toggleLangMenu();
-                }}
-                aria-label="Change language"
-                className={`mobile-control-button lang ${theme}`}
+                onClick={toggleTheme}
+                aria-label="Toggle theme"
+                className={`mobile-control-button theme ${theme}`}
               >
-                {lang.toUpperCase()}
+                <img 
+                  src="/icons/tchange.png" 
+                  alt="Theme" 
+                  className="mobile-control-icon"
+                />
               </button>
-              {langMenuOpen && (
-                <div className="mobile-lang-menu">
-                  {(['en', 'ru', 'kz'] as Lang[]).filter(code => code !== lang).map((code, i) => (
-                    <button
-                      key={code}
-                      onClick={(e) => { 
-                        e.stopPropagation();
-                        if (selectLang) selectLang(code); 
-                        setLangMenuOpen(false); 
-                      }}
-                      className={`mobile-lang-option ${theme}`}
-                    >
-                      {code.toUpperCase()}
-                    </button>
-                  ))}
-                </div>
-              )}
+              
+              <div style={{ position: 'relative' }} data-lang-menu>
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    toggleLangMenu();
+                  }}
+                  aria-label="Change language"
+                  className={`mobile-control-button lang ${theme}`}
+                >
+                  {lang.toUpperCase()}
+                </button>
+                {langMenuOpen && (
+                  <div className="mobile-lang-menu">
+                    {(['en', 'ru', 'kz'] as Lang[]).filter(code => code !== lang).map((code, i) => (
+                      <button
+                        key={code}
+                        onClick={(e) => { 
+                          e.stopPropagation();
+                          if (selectLang) selectLang(code); 
+                          setLangMenuOpen(false); 
+                        }}
+                        className={`mobile-lang-option ${theme}`}
+                      >
+                        {code.toUpperCase()}
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
             </div>
 
             <MobileFilterFab
