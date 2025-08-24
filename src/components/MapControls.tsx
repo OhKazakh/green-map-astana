@@ -29,7 +29,7 @@ const MapControls: React.FC<MapControlsProps> = ({
         className={`map-control-button theme ${theme}`}
       >
         <img 
-          src="/icons/theme.png" 
+          src="/icons/tchange.png" 
           alt="Theme" 
           className="map-control-icon"
         />

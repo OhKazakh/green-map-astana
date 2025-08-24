@@ -329,7 +329,7 @@ const Mobile: React.FC<Props> = ({
               className={`mobile-control-button theme ${theme}`}
             >
               <img 
-                src="/icons/theme.png" 
+                src="/icons/tchange.png" 
                 alt="Theme" 
                 className="mobile-control-icon"
               />
