@@ -95,7 +95,6 @@ export interface LocationItem {
 }
 
 export const MATERIAL_OPTIONS = [
-  'All',
   'Paper',
   'Glass',
   'Clothes',
