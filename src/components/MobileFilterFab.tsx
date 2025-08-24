@@ -5,14 +5,39 @@ import { Lang } from '../data/translations';
 
 interface Props {
   lang: Lang;
-  selectedMaterial: string;
+  selectedMaterials: string[];
   selectMaterial: (material: string) => void;
   theme: 'dark' | 'light';
 }
 
-const MobileFilterFab: React.FC<Props> = ({ lang, selectedMaterial, selectMaterial, theme }) => {
+const MobileFilterFab: React.FC<Props> = ({ lang, selectedMaterials, selectMaterial, theme }) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [pos] = useState({ x: 16, y: 20 });
+
+  const handleMaterialToggle = (material: string) => {
+    selectMaterial(material);
+  };
+
+  const handleSelectAll = () => {
+    if (selectedMaterials.length === MATERIAL_OPTIONS.length) {
+      // If all are selected, deselect all
+      MATERIAL_OPTIONS.forEach(material => {
+        if (selectedMaterials.includes(material)) {
+          selectMaterial(material);
+        }
+      });
+    } else {
+      // Select all materials
+      MATERIAL_OPTIONS.forEach(material => {
+        if (!selectedMaterials.includes(material)) {
+          selectMaterial(material);
+        }
+      });
+    }
+  };
+
+  const allSelected = selectedMaterials.length === MATERIAL_OPTIONS.length;
+  const selectAllText = allSelected ? STRINGS[lang].deselectAll : STRINGS[lang].selectAll;
 
   const onPointerDown = useCallback((e: React.PointerEvent) => {
     e.stopPropagation();
@@ -105,13 +130,30 @@ const MobileFilterFab: React.FC<Props> = ({ lang, selectedMaterial, selectMateri
                 />
                 <input
                   type="radio"
-                  checked={selectedMaterial === m}
-                  onChange={() => selectMaterial(m)}
+                  checked={selectedMaterials.includes(m)}
+                  onChange={() => handleMaterialToggle(m)}
                   className="mobile-filter-option-input"
                 />
                 {MATERIAL_LABELS[lang][m as keyof typeof MATERIAL_LABELS[typeof lang]] ?? m}
               </label>
             ))}
+            <label 
+              key="select-all" 
+              className="mobile-filter-option"
+            >
+              <img 
+                src="/icons/select-all.png" 
+                alt="Select all"
+                className={`mobile-filter-option-icon ${theme === 'light' ? 'light' : ''}`}
+              />
+              <input
+                type="checkbox"
+                checked={allSelected}
+                onChange={handleSelectAll}
+                className="mobile-filter-option-input"
+              />
+              {selectAllText}
+            </label>
           </div>
         </div>
       ) : (

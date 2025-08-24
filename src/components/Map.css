@@ -24,7 +24,7 @@
   transition: transform 0.4s ease;
 }
 
-.map-control-button.theme {
+.map-control-button.theme { 
   background: rgba(31, 41, 55, 0.8);
   color: #fff;
   font-size: 20px;
@@ -681,7 +681,7 @@
 /* Mobile Controls */
 .mobile-controls {
   position: absolute;
-  top: 16px;
+  top: 80px;
   left: 16px;
   display: flex;
   gap: 8px;

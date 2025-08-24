@@ -145,19 +145,20 @@ const baseOptions: google.maps.MapOptions = {
 type Lang = 'en' | 'ru' | 'kz';
 
 interface Props {
+  theme: 'dark' | 'light';
   lang: Lang;
-  locations: LocationItem[];
-  selectedMaterial: string;
+  selectLang?: (lang: Lang) => void;
+  selectedMaterials: string[];
   selectMaterial: (material: string) => void;
+  locations: LocationItem[];
   selectedLocation: number | null;
   selectLocation: (location: number | null) => void;
-  selectLang?: (lang: Lang) => void;
 }
 
 const Mobile: React.FC<Props> = ({
   lang,
   locations,
-  selectedMaterial,
+  selectedMaterials,
   selectMaterial,
   selectedLocation,
   selectLocation,
@@ -259,11 +260,11 @@ const Mobile: React.FC<Props> = ({
   };
 
   const filteredLocations: LocationItem[] = useMemo(() => {
-    if (selectedMaterial === 'All') {
+    if (selectedMaterials.length === 0) {
       return locations;
     }
-    return locations.filter(l => l.materials.includes(selectedMaterial));
-  }, [locations, selectedMaterial]);
+    return locations.filter(l => l.materials.some(m => selectedMaterials.includes(m)));
+  }, [locations, selectedMaterials]);
 
   const mapOptions = useMemo(() => {
     const styles = isSatellite ? satelliteStyle : (theme === 'dark' ? greenFirstStyle : lightStyle);
@@ -470,7 +471,7 @@ const Mobile: React.FC<Props> = ({
       {/* Mobile Filter FAB */}
       <MobileFilterFab
         lang={lang}
-        selectedMaterial={selectedMaterial}
+        selectedMaterials={selectedMaterials}
         selectMaterial={selectMaterial}
         theme={theme}
       />

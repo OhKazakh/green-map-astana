@@ -17,8 +17,14 @@ function App() {
     return 'en';
   });
   const [locations] = useState(locationsData);
-  const [selectedMaterial, setSelectedMaterial] = useState('All');
+  const [selectedMaterials, setSelectedMaterials] = useState<string[]>([]);
   const [selectedLocation, setSelectedLocation] = useState<number | null>(null);
+  const [theme, setTheme] = useState<'light' | 'dark'>(() => {
+    if (typeof window !== 'undefined') {
+      return (localStorage.getItem('theme') as 'light' | 'dark') || 'dark';
+    }
+    return 'dark';
+  });
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -26,14 +32,31 @@ function App() {
     }
   }, [lang]);
 
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('theme', theme);
+    }
+  }, [theme]);
+
+  const handleMaterialSelect = (material: string) => {
+    setSelectedMaterials(prev => {
+      if (prev.includes(material)) {
+        return prev.filter(m => m !== material);
+      } else {
+        return [...prev, material];
+      }
+    });
+  };
+
   const commonProps = {
     lang,
     locations,
-    selectedMaterial,
-    selectMaterial: setSelectedMaterial,
+    selectedMaterials,
+    selectMaterial: handleMaterialSelect,
     selectedLocation,
     selectLocation: setSelectedLocation,
     selectLang: setLang,
+    theme,
   };
 
   const matchMediaResult = window.matchMedia('(max-width: 768px)').matches;
