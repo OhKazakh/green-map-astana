@@ -4,7 +4,7 @@ import { locationTranslations } from '../data/translations';
 import { locations } from '../data/locations';
 import { STRINGS, MATERIAL_LABELS, LocationItem } from '../constants/mapConstants';
 import MobileFilterFab from './MobileFilterFab';
-import './Mobile.css';
+import './Map.css';
 
 const center = {
   lat: 51.125417,
