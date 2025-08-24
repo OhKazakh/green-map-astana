@@ -322,7 +322,6 @@ const Mobile: React.FC<Props> = ({
             return undefined; 
           }}
         >
-          {/* Theme & Language toggles */}
           <div className="mobile-controls">
             <button
               onClick={toggleTheme}
@@ -367,7 +366,6 @@ const Mobile: React.FC<Props> = ({
             </div>
           </div>
 
-          {/* User location marker */}
           {userPos && (
             <>
               <Marker
@@ -387,7 +385,6 @@ const Mobile: React.FC<Props> = ({
             </>
           )}
 
-          {/* Markers */}
           {filteredLocations.map((location, index) => {
             const id = location.id;
             return (
@@ -410,7 +407,6 @@ const Mobile: React.FC<Props> = ({
             );
           })}
 
-          {/* Click panel (mobile info panel) */}
           {selectedLocation !== null && (
             <div
               className={`mobile-info-panel ${isClosing ? 'slide-out' : 'slide-in'}`}
@@ -460,7 +456,6 @@ const Mobile: React.FC<Props> = ({
         </GoogleMap>
       </LoadScript>
 
-      {/* Mobile Filter FAB */}
       <MobileFilterFab
         lang={lang}
         selectedMaterials={selectedMaterials}
@@ -468,7 +463,6 @@ const Mobile: React.FC<Props> = ({
         theme={theme}
       />
 
-      {/* Map Controls (zoom & my location) */}
       <div className="mobile-map-controls">
         <button
           onClick={zoomIn}
