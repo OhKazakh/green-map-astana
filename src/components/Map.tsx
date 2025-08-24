@@ -9,7 +9,6 @@ import MapMarkers from './MapMarkers';
 import MapInfoPanel from './MapInfoPanel';
 import MapToolbar from './MapToolbar';
 
-// Map component - updated
 const center = MAP_CONSTANTS.MAP.CENTER;
 
 const greenFirstStyle = [
@@ -458,16 +457,12 @@ const Map: React.FC = () => {
 
   const selectMaterial = (m: string) => {
     if (m === '__SELECT_ALL__') {
-      // Select all materials
       updateMapState({ selectedMaterials: MATERIAL_OPTIONS });
     } else if (m === '__CLEAR_ALL__') {
-      // Clear all materials
       updateMapState({ selectedMaterials: [] });
     } else if (mapState.selectedMaterials.includes(m)) {
-      // Remove material if already selected
       updateMapState({ selectedMaterials: mapState.selectedMaterials.filter(mat => mat !== m) });
     } else {
-      // Add material if not selected
       updateMapState({ selectedMaterials: [...mapState.selectedMaterials, m] });
     }
   };

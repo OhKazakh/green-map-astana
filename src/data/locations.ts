@@ -1,4 +1,3 @@
-// Location data for recycling centers
 export interface LocationItem {
   id: number;
   category: "BIG" | "SMALL";

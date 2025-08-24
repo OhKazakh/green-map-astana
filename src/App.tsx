@@ -6,7 +6,6 @@ import { useIsMobile } from './hooks/useIsMobile';
 import { Lang } from './data/translations';
 import { locations as locationsData } from './data/locations';
 
-// Main App component - updated
 function App() {
   const isMobile = useIsMobile();
 

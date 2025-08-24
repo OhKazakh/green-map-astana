@@ -4,7 +4,6 @@ import { LocationItem } from '../constants/mapConstants';
 import { Lang } from '../data/translations';
 import './Map.css';
 
-// Map info panel component
 interface MapInfoPanelProps {
   selectedLocation: number | null;
   isPanelClosing: boolean;

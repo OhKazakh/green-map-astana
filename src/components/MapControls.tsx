@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import './Map.css';
 import { Lang } from '../data/translations';
 
-// Map controls component
 interface MapControlsProps {
   theme: 'dark' | 'light';
   lang: Lang;
@@ -30,7 +29,7 @@ const MapControls: React.FC<MapControlsProps> = ({
         className={`map-control-button theme ${theme}`}
       >
         <img
-          src="/icons/theme.png"
+          src="/icons/icontheme.png"
           alt="Theme"
           className="map-control-icon"
         />

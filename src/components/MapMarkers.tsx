@@ -5,7 +5,6 @@ import { LocationItem } from '../constants/mapConstants';
 import { Lang } from '../data/translations';
 import './Map.css';
 
-// Map markers component
 interface MapMarkersProps {
   locations: LocationItem[];
   filteredLocations: LocationItem[];

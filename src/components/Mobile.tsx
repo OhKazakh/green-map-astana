@@ -5,13 +5,11 @@ import { LocationItem, STRINGS } from '../constants/mapConstants';
 import MobileFilterFab from './MobileFilterFab';
 import './Map.css';
 
-// Constants from Map.tsx - updated
 const center = {
   lat: 51.125417,
   lng: 71.433722
 };
 
-// Mobile component - updated
 const greenFirstStyle = [
   {
     featureType: "all",
@@ -140,8 +138,6 @@ const baseOptions: google.maps.MapOptions = {
   center: { lat: 51.125417, lng: 71.433722 },
 };
 
-// Locations data is now imported from ../data/locations
-
 type Lang = 'en' | 'ru' | 'kz';
 
 interface Props {
@@ -206,7 +202,6 @@ const Mobile: React.FC<Props> = ({
     setLangMenuOpen(o => !o);
   };
 
-  // Close language menu when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       const target = event.target as Element;
@@ -221,7 +216,6 @@ const Mobile: React.FC<Props> = ({
     };
   }, [langMenuOpen]);
 
-  // Update local lang state when prop changes
   useEffect(() => {
     setIsMapLoading(true);
   }, [lang]);
@@ -254,7 +248,6 @@ const Mobile: React.FC<Props> = ({
         mapRef.current?.setZoom?.(15);
       },
       () => {
-        // Geolocation error - user may have denied permission
       }
     );
   };
@@ -288,11 +281,10 @@ const Mobile: React.FC<Props> = ({
     setTimeout(() => {
       selectLocation(null);
       setIsClosing(false);
-    }, 300); // Match the animation duration
+    }, 300);
   };
 
   const handleContainerClick = () => {
-    // Dispatch a custom event to close the filter panel
     window.dispatchEvent(new CustomEvent('closeFilterPanel'));
   };
 
@@ -338,7 +330,7 @@ const Mobile: React.FC<Props> = ({
               className={`mobile-control-button theme ${theme}`}
             >
               <img
-                src="/icons/theme.png"
+                src="/icons/icontheme.png"
                 alt="Theme"
                 className="mobile-control-icon"
               />

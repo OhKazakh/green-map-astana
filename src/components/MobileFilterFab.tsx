@@ -20,14 +20,12 @@ const MobileFilterFab: React.FC<Props> = ({ lang, selectedMaterials, selectMater
 
   const handleSelectAll = () => {
     if (selectedMaterials.length === MATERIAL_OPTIONS.length) {
-      // If all are selected, deselect all
       MATERIAL_OPTIONS.forEach(material => {
         if (selectedMaterials.includes(material)) {
           selectMaterial(material);
         }
       });
     } else {
-      // Select all materials
       MATERIAL_OPTIONS.forEach(material => {
         if (!selectedMaterials.includes(material)) {
           selectMaterial(material);

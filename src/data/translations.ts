@@ -1,4 +1,3 @@
-// Translation data for locations
 export type Lang = 'en' | 'ru' | 'kz';
 
 export interface LocationTranslations {
