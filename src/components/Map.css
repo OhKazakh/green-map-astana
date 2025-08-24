@@ -532,9 +532,7 @@
 }
 
 .mobile-filter-fab {
-  position: absolute;
-  left: 16px;
-  top: 140px;
+  position: relative;
   z-index: 2500;
 }
 
@@ -702,6 +700,10 @@
   animation: fadeInUp 0.4s ease-out 0.5s both;
 }
 
+.mobile-filter-option:nth-child(7) {
+  animation: fadeInUp 0.4s ease-out 0.6s both;
+}
+
 .mobile-filter-option-icon {
   width: 24px;
   height: 24px;
@@ -781,6 +783,7 @@
   top: 80px;
   left: 16px;
   display: flex;
+  flex-direction: column;
   gap: 8px;
   z-index: 2501;
 }

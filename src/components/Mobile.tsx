@@ -364,6 +364,13 @@ const Mobile: React.FC<Props> = ({
                 </div>
               )}
             </div>
+
+            <MobileFilterFab
+              lang={lang}
+              selectedMaterials={selectedMaterials}
+              selectMaterial={selectMaterial}
+              theme={theme}
+            />
           </div>
 
           {userPos && (
@@ -455,13 +462,6 @@ const Mobile: React.FC<Props> = ({
           )}
         </GoogleMap>
       </LoadScript>
-
-      <MobileFilterFab
-        lang={lang}
-        selectedMaterials={selectedMaterials}
-        selectMaterial={selectMaterial}
-        theme={theme}
-      />
 
       <div className="mobile-map-controls">
         <button
