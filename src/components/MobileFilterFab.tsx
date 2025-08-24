@@ -118,42 +118,45 @@ const MobileFilterFab: React.FC<Props> = ({ lang, selectedMaterials, selectMater
             </button>
           </div>
           <div className="mobile-filter-grid">
-            {['All', ...MATERIAL_OPTIONS].map((m, index) => (
-              <label 
-                key={m} 
-                className="mobile-filter-option"
-              >
-                <img 
-                  src={MATERIAL_ICONS[m] ?? '/icons/all.png'} 
-                  alt={m}
-                  className={`mobile-filter-option-icon ${theme === 'light' ? 'light' : ''}`}
-                />
-                <input
-                  type="radio"
-                  checked={selectedMaterials.includes(m)}
-                  onChange={() => handleMaterialToggle(m)}
-                  className="mobile-filter-option-input"
-                />
-                {MATERIAL_LABELS[lang][m as keyof typeof MATERIAL_LABELS[typeof lang]] ?? m}
-              </label>
-            ))}
-            <label 
-              key="select-all" 
-              className="mobile-filter-option"
+            <div
+              className={`mobile-filter-option select-all ${allSelected ? 'selected' : ''} ${theme}`}
+              onClick={handleSelectAll}
             >
-              <img 
-                src="/icons/select-all.png" 
-                alt="Select all"
-                className={`mobile-filter-option-icon ${theme === 'light' ? 'light' : ''}`}
-              />
-              <input
-                type="checkbox"
-                checked={allSelected}
-                onChange={handleSelectAll}
-                className="mobile-filter-option-input"
-              />
-              {selectAllText}
-            </label>
+              <div className="mobile-filter-option-content">
+                <img 
+                  src="/icons/all.png" 
+                  alt="Select all"
+                  className="mobile-filter-option-icon"
+                />
+                <span className="mobile-filter-option-label">
+                  {selectAllText}
+                </span>
+              </div>
+            </div>
+            
+            {MATERIAL_OPTIONS.map((material) => {
+              const isSelected = selectedMaterials.includes(material);
+              const label = MATERIAL_LABELS[lang][material as keyof typeof MATERIAL_LABELS[typeof lang]] || material;
+              
+              return (
+                <div
+                  key={material}
+                  className={`mobile-filter-option ${isSelected ? 'selected' : ''} ${theme}`}
+                  onClick={() => handleMaterialToggle(material)}
+                >
+                  <div className="mobile-filter-option-content">
+                    <img 
+                      src={MATERIAL_ICONS[material]} 
+                      alt={label}
+                      className="mobile-filter-option-icon"
+                    />
+                    <span className="mobile-filter-option-label">
+                      {label}
+                    </span>
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </div>
       ) : (
