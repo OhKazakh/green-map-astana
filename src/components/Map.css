@@ -101,126 +101,48 @@
 /* Map Panel */
 .map-panel {
   position: absolute;
-  top: 72px;
-  left: 16px;
-  z-index: 2600;
-  width: 280px;
-  background: rgba(255, 255, 255, 0.3);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 12px;
-  padding: 16px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-  backdrop-filter: blur(10px);
-}
-
-.map-panel.dark {
-  background: rgba(0, 0, 0, 0.3);
-  border-color: rgba(255, 255, 255, 0.1);
-  color: white;
-}
-
-.map-panel-header {
-  margin-bottom: 16px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-  padding-bottom: 12px;
-}
-
-.map-panel.dark .map-panel-header {
-  border-bottom-color: rgba(255, 255, 255, 0.1);
-}
-
-.map-panel-title {
-  margin: 0;
-  font-size: 18px;
-  font-weight: 600;
-  color: #333;
-  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
-}
-
-.map-panel.dark .map-panel-title {
-  color: white;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
-}
-
-.map-panel-content {
-  max-height: 400px;
+  z-index: 2500;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  backdrop-filter: blur(4px);
+  user-select: none;
+  max-height: 70vh;
   overflow-y: auto;
 }
 
-.map-panel-materials {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
+.map-panel.light {
+  background: rgba(0, 0, 0, 0.60);
+  color: #fff;
 }
 
-.map-panel-material-option {
-  display: flex;
-  align-items: center;
-  padding: 10px 12px;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  border: 1px solid transparent;
-  background: rgba(255, 255, 255, 0.1);
+.map-panel.dark {
+  background: rgba(255, 255, 255, 0.70);
+  color: inherit;
 }
 
-.map-panel-material-option:hover {
-  background: rgba(255, 255, 255, 0.2);
-  border-color: rgba(255, 255, 255, 0.3);
+.map-panel.en {
+  width: 360px;
 }
 
-.map-panel.dark .map-panel-material-option {
-  background: rgba(255, 255, 255, 0.05);
+.map-panel.ru {
+  width: 420px;
 }
 
-.map-panel.dark .map-panel-material-option:hover {
-  background: rgba(255, 255, 255, 0.1);
-  border-color: rgba(255, 255, 255, 0.2);
+.map-panel.kz {
+  width: 440px;
 }
 
-.map-panel-material-option.selected {
-  background: rgba(59, 130, 246, 0.3);
-  border-color: rgba(59, 130, 246, 0.5);
-}
-
-.map-panel.dark .map-panel-material-option.selected {
-  background: rgba(59, 130, 246, 0.4);
-  border-color: rgba(59, 130, 246, 0.6);
-}
-
-.map-panel-material-option.all-option {
-  border-bottom: 2px solid #e5e7eb;
-  margin-bottom: 8px;
-  padding-bottom: 12px;
-}
-
-.map-panel.dark .map-panel-material-option.all-option {
-  border-bottom-color: #555;
-}
-
-.map-panel-material-content {
+.map-panel-header {
   display: flex;
   align-items: center;
-  gap: 12px;
-  flex: 1;
+  margin-bottom: 16px;
+  cursor: move;
 }
 
-.map-panel-material-icon {
-  width: 20px;
-  height: 20px;
-  object-fit: contain;
-}
-
-.map-panel-material-label {
-  font-size: 14px;
-  font-weight: 500;
-  color: #333;
-  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
-}
-
-.map-panel.dark .map-panel-material-label {
-  color: white;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+.map-panel-title {
+  font-size: 18px;
+  font-weight: 600;
 }
 
 .map-panel-grid {
@@ -856,68 +778,4 @@
 
 .mobile-map-control-icon.light {
   filter: brightness(0) invert(1);
-}
-
-/* Mobile Responsiveness */
-@media (max-width: 768px) {
-  .map-panel {
-    position: fixed;
-    top: auto;
-    bottom: 20px;
-    left: 20px;
-    right: 20px;
-    width: auto;
-    max-width: 400px;
-    margin: 0 auto;
-    padding: 12px;
-  }
-  
-  .map-panel-header {
-    margin-bottom: 12px;
-    padding-bottom: 8px;
-  }
-  
-  .map-panel-title {
-    font-size: 16px;
-    text-align: center;
-  }
-  
-  .map-panel-materials {
-    gap: 2px;
-  }
-  
-  .map-panel-material-option {
-    padding: 8px 10px;
-  }
-  
-  .map-panel-material-icon {
-    width: 18px;
-    height: 18px;
-  }
-  
-  .map-panel-material-label {
-    font-size: 13px;
-  }
-}
-
-@media (max-width: 480px) {
-  .map-panel {
-    bottom: 16px;
-    left: 16px;
-    right: 16px;
-    padding: 10px;
-  }
-  
-  .map-panel-material-option {
-    padding: 6px 8px;
-  }
-  
-  .map-panel-material-icon {
-    width: 16px;
-    height: 16px;
-  }
-  
-  .map-panel-material-label {
-    font-size: 12px;
-  }
 }
