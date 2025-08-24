@@ -9,6 +9,7 @@ import MapMarkers from './MapMarkers';
 import MapInfoPanel from './MapInfoPanel';
 import MapToolbar from './MapToolbar';
 
+// Map component - updated
 const center = MAP_CONSTANTS.MAP.CENTER;
 
 const greenFirstStyle = [

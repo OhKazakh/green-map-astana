@@ -11,6 +11,7 @@ const center = {
   lng: 71.433722
 };
 
+// Mobile component - updated
 const greenFirstStyle = [
   {
     featureType: "all",
@@ -474,36 +475,36 @@ const Mobile: React.FC<Props> = ({
       <div className="mobile-map-controls">
         <button
           onClick={zoomIn}
-          className="mobile-map-control-button bounce-1"
+          className={`mobile-map-control-button bounce-1 ${theme}`}
         >
           +
         </button>
         <button
           onClick={zoomOut}
-          className="mobile-map-control-button bounce-2"
+          className={`mobile-map-control-button bounce-2 ${theme}`}
         >
           -
         </button>
         <button
           onClick={toggleSatellite}
-          className="mobile-map-control-button bounce-3"
+          className={`mobile-map-control-button bounce-3 ${theme}`}
           title={isSatellite ? 'Map view' : 'Satellite view'}
         >
           <img 
             src="/icons/satelite.png" 
             alt={isSatellite ? 'Map view' : 'Satellite view'}
-            className={`mobile-map-control-icon ${theme === 'light' ? 'light' : ''}`}
+            className="mobile-map-control-icon"
           />
         </button>
         <button
           onClick={centerOnUser}
-          className="mobile-map-control-button bounce-4"
+          className={`mobile-map-control-button bounce-4 ${theme}`}
           title={STRINGS[lang].myLocation}
         >
           <img 
             src="/icons/findme.png" 
             alt={STRINGS[lang].myLocation}
-            className={`mobile-map-control-icon ${theme === 'light' ? 'light' : ''}`}
+            className="mobile-map-control-icon"
           />
         </button>
       </div>

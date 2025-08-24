@@ -161,7 +161,7 @@ h1 {
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.3);
+  background: rgba(0, 0, 0, 0.1);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -170,21 +170,21 @@ h1 {
 }
 
 .info-content {
-  background: rgba(255, 255, 255, 0.8);
+  background: rgba(255, 255, 255, 0.6);
   border-radius: 16px;
   padding: 24px;
   width: 100%;
   max-width: 280px; /* Even narrower to create more space */
   max-height: 80vh;
   overflow-y: auto;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   margin: 0 auto;
   position: relative;
   left: 50%;
   transform: translateX(-50%);
   margin-right: 200px; /* Much larger right margin to avoid all right-side buttons */
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(15px);
 }
 
 .info-content h3 {
