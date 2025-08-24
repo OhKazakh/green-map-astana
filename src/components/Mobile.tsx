@@ -1,9 +1,10 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useRef, useEffect, useMemo } from 'react';
 import { GoogleMap, LoadScript, Marker, OverlayView } from '@react-google-maps/api';
 import { locationTranslations } from '../data/translations';
-import { LocationItem, STRINGS } from '../constants/mapConstants';
+import { locations } from '../data/locations';
+import { STRINGS, MATERIAL_LABELS, LocationItem } from '../constants/mapConstants';
 import MobileFilterFab from './MobileFilterFab';
-import './Map.css';
+import './Mobile.css';
 
 const center = {
   lat: 51.125417,
@@ -453,7 +454,7 @@ const Mobile: React.FC<Props> = ({
                       <strong>{STRINGS[lang].materialsList}</strong>
                       <ul>
                         {cur.materials.map(m => (
-                          <li key={m}>{m}</li>
+                          <li key={m}>{MATERIAL_LABELS[lang][m as keyof typeof MATERIAL_LABELS[typeof lang]] ?? m}</li>
                         ))}
                       </ul>
                     </div>
