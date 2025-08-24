@@ -101,48 +101,113 @@
 /* Map Panel */
 .map-panel {
   position: absolute;
-  z-index: 2500;
-  padding: 20px;
+  top: 72px;
+  left: 16px;
+  z-index: 2600;
+  width: 280px;
+  background: rgba(255, 255, 255, 0.95);
   border: 1px solid #ccc;
-  border-radius: 10px;
-  backdrop-filter: blur(4px);
-  user-select: none;
-  max-height: 70vh;
-  overflow-y: auto;
-}
-
-.map-panel.light {
-  background: rgba(0, 0, 0, 0.60);
-  color: #fff;
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  backdrop-filter: blur(10px);
 }
 
 .map-panel.dark {
-  background: rgba(255, 255, 255, 0.70);
-  color: inherit;
-}
-
-.map-panel.en {
-  width: 360px;
-}
-
-.map-panel.ru {
-  width: 420px;
-}
-
-.map-panel.kz {
-  width: 440px;
+  background: rgba(40, 40, 40, 0.95);
+  border-color: #555;
+  color: white;
 }
 
 .map-panel-header {
-  display: flex;
-  align-items: center;
   margin-bottom: 16px;
-  cursor: move;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 12px;
+}
+
+.map-panel.dark .map-panel-header {
+  border-bottom-color: #555;
 }
 
 .map-panel-title {
+  margin: 0;
   font-size: 18px;
   font-weight: 600;
+  color: #333;
+}
+
+.map-panel.dark .map-panel-title {
+  color: white;
+}
+
+.map-panel-content {
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.map-panel-materials {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.map-panel-material-option {
+  display: flex;
+  align-items: center;
+  padding: 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: 2px solid transparent;
+}
+
+.map-panel-material-option:hover {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+.map-panel.dark .map-panel-material-option:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.map-panel-material-option.selected {
+  background: rgba(59, 130, 246, 0.1);
+  border-color: rgba(59, 130, 246, 0.3);
+}
+
+.map-panel.dark .map-panel-material-option.selected {
+  background: rgba(59, 130, 246, 0.2);
+  border-color: rgba(59, 130, 246, 0.5);
+}
+
+.map-panel-checkbox {
+  width: 18px;
+  height: 18px;
+  margin-right: 12px;
+  accent-color: #3b82f6;
+  cursor: pointer;
+}
+
+.map-panel-material-content {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+}
+
+.map-panel-material-icon {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+}
+
+.map-panel-material-label {
+  font-size: 14px;
+  font-weight: 500;
+  color: #333;
+}
+
+.map-panel.dark .map-panel-material-label {
+  color: white;
 }
 
 .map-panel-grid {
