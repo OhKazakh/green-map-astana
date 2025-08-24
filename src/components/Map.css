@@ -105,16 +105,17 @@
   left: 16px;
   z-index: 2500;
   width: 220px;
-  background: rgba(255, 255, 255, 0.3);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(0, 0, 0, 0.1);
   border-radius: 8px;
   padding: 16px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   backdrop-filter: blur(10px);
+  color: #333;
 }
 
 .map-panel.dark {
-  background: rgba(0, 0, 0, 0.3);
+  background: rgba(31, 41, 55, 0.95);
   border-color: rgba(255, 255, 255, 0.1);
   color: white;
 }
@@ -137,12 +138,12 @@
   cursor: pointer;
   transition: all 0.2s ease;
   border: 1px solid transparent;
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(0, 0, 0, 0.05);
 }
 
 .map-panel-material-option:hover {
-  background: rgba(255, 255, 255, 0.2);
-  border-color: rgba(255, 255, 255, 0.3);
+  background: rgba(0, 0, 0, 0.1);
+  border-color: rgba(0, 0, 0, 0.2);
 }
 
 .map-panel.dark .map-panel-material-option {
@@ -155,18 +156,19 @@
 }
 
 .map-panel-material-option.selected {
-  background: rgba(59, 130, 246, 0.4);
-  border-color: rgba(59, 130, 246, 0.6);
-  color: white;
+  background: rgba(59, 130, 246, 0.2);
+  border-color: rgba(59, 130, 246, 0.4);
+  color: #1e40af;
 }
 
 .map-panel.dark .map-panel-material-option.selected {
-  background: rgba(59, 130, 246, 0.5);
-  border-color: rgba(59, 130, 246, 0.7);
+  background: rgba(59, 130, 246, 0.3);
+  border-color: rgba(59, 130, 246, 0.5);
+  color: #60a5fa;
 }
 
 .map-panel-material-option.all-option {
-  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   margin-bottom: 8px;
   padding-bottom: 10px;
 }
@@ -194,22 +196,18 @@
   font-weight: 500;
   line-height: 1.2;
   color: #333;
-  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
 }
 
 .map-panel.dark .map-panel-material-label {
   color: white;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
 }
 
 .map-panel-material-option.selected .map-panel-material-label {
-  color: white;
-  text-shadow: none;
+  color: #1e40af;
 }
 
 .map-panel.dark .map-panel-material-option.selected .map-panel-material-label {
-  color: white;
-  text-shadow: none;
+  color: #60a5fa;
 }
 
 .map-panel-header {

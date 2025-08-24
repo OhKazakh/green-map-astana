@@ -1,3 +1,5 @@
+export type Lang = 'en' | 'ru' | 'kz';
+
 export interface LocationTranslations {
   name: string;
   info: string;

@@ -154,7 +154,28 @@ export const MATERIAL_LABELS = {
 };
 
 export const STRINGS = {
-  en: { filter: 'Filter', for: 'For', materialsList: 'Materials:', myLocation: 'My location' },
-  ru: { filter: 'Фильтр', for: 'Для', materialsList: 'Материалы:', myLocation: 'Моё местоположение' },
-  kz: { filter: 'Сүзгі', for: 'Кімге', materialsList: 'Материалдар:', myLocation: 'Орналасқан жерім' },
+  en: { 
+    filter: 'Filter', 
+    for: 'For', 
+    materialsList: 'Materials:', 
+    myLocation: 'My location',
+    selectAll: 'Select all',
+    deselectAll: 'Deselect all'
+  },
+  ru: { 
+    filter: 'Фильтр', 
+    for: 'Для', 
+    materialsList: 'Материалы:', 
+    myLocation: 'Моё местоположение',
+    selectAll: 'Выбрать все',
+    deselectAll: 'Снять выбор'
+  },
+  kz: { 
+    filter: 'Сүзгі', 
+    for: 'Кімге', 
+    materialsList: 'Материалдар:', 
+    myLocation: 'Орналасқан жерім',
+    selectAll: 'Барлығын таңдау',
+    deselectAll: 'Таңдауды алып тастау'
+  },
 };
