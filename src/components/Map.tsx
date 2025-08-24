@@ -391,16 +391,13 @@ const Map: React.FC = () => {
   const mapRef = React.useRef<google.maps.Map | null>(null);
 
   const [mapState, setMapState] = useState({
-    selectedMaterial: (() => {
-      if (typeof window === 'undefined') return 'All';
-      return sessionStorage.getItem('gm_material') || 'All';
-    })(),
+    theme: 'light' as 'light' | 'dark',
+    lang: 'en' as Lang,
+    selectedMaterials: [] as string[],
     selectedLocation: null as number | null,
-    isPanelClosing: false,
-    userPos: null as google.maps.LatLngLiteral | null,
-    theme: (() => (typeof window !== 'undefined' && localStorage.getItem('theme') === 'light' ? 'light' : 'dark'))() as 'dark' | 'light',
     isSatellite: false,
-    lang: (() => (typeof window !== 'undefined' ? (localStorage.getItem('lang') as Lang) || 'en' : 'en'))() as Lang
+    userPos: null as { lat: number; lng: number } | null,
+    isPanelClosing: false,
   });
 
   const panelTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -454,14 +451,20 @@ const Map: React.FC = () => {
 
   useEffect(() => {
     try { 
-      sessionStorage.setItem('gm_material', mapState.selectedMaterial); 
+      sessionStorage.setItem('gm_material', mapState.selectedMaterials.join(',')); 
     } catch (error) {
       console.warn('Failed to save material preference:', error);
     }
-  }, [mapState.selectedMaterial]);
+  }, [mapState.selectedMaterials]);
 
   const selectMaterial = (m: string) => {
-    updateMapState({ selectedMaterial: m });
+    if (mapState.selectedMaterials.includes(m)) {
+      // Remove material if already selected
+      updateMapState({ selectedMaterials: mapState.selectedMaterials.filter(mat => mat !== m) });
+    } else {
+      // Add material if not selected
+      updateMapState({ selectedMaterials: [...mapState.selectedMaterials, m] });
+    }
   };
 
   const toggleLocation = (id: number) => {
@@ -524,8 +527,8 @@ const Map: React.FC = () => {
   };
 
   const filteredLocations: LocationItem[] = useMemo(() => {
-    return locations.filter(l => mapState.selectedMaterial === 'All' || l.materials.includes(mapState.selectedMaterial));
-  }, [mapState.selectedMaterial]);
+    return locations.filter(l => mapState.selectedMaterials.length === 0 || l.materials.some(m => mapState.selectedMaterials.includes(m)));
+  }, [mapState.selectedMaterials]);
 
   const mapOptions = useMemo(() => ({
     ...baseOptions,
@@ -571,7 +574,7 @@ const Map: React.FC = () => {
           <MapPanel
             lang={mapState.lang}
             theme={mapState.theme}
-            selectedMaterial={mapState.selectedMaterial}
+            selectedMaterials={mapState.selectedMaterials}
             onMaterialSelect={selectMaterial}
             materialOptions={MATERIAL_OPTIONS}
             materialIcons={MATERIAL_ICONS}
