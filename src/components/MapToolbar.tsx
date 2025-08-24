@@ -23,43 +23,46 @@ const MapToolbar: React.FC<MapToolbarProps> = ({
   return (
     <div className="map-toolbar">
       <button
+        className={`map-toolbar-button ${theme}`}
         onClick={onZoomIn}
-        className="map-toolbar-button"
         aria-label="Zoom in"
         title="Zoom in"
       >
-        +
+        <span className="map-toolbar-icon">+</span>
       </button>
+      
       <button
+        className={`map-toolbar-button ${theme}`}
         onClick={onZoomOut}
-        className="map-toolbar-button zoom-out"
         aria-label="Zoom out"
         title="Zoom out"
       >
-        −
+        <span className="map-toolbar-icon">−</span>
       </button>
+      
       <button
+        className={`map-toolbar-button ${theme}`}
         onClick={onToggleSatellite}
-        className="map-toolbar-button"
-        title={isSatellite ? 'Switch to map view' : 'Switch to satellite view'}
-        aria-label={isSatellite ? 'Switch to map view' : 'Switch to satellite view'}
+        aria-label="Toggle satellite view"
+        title="Toggle satellite view"
       >
-        <img 
-          src="/icons/satelite.png" 
-          alt={isSatellite ? 'Map view' : 'Satellite view'}
-          className={`map-toolbar-icon ${theme === 'light' ? 'light' : ''}`}
+        <img
+          src="/icons/satelite.png"
+          alt="Satellite"
+          className="map-toolbar-icon"
         />
       </button>
+      
       <button
+        className={`map-toolbar-button ${theme}`}
         onClick={onCenterOnUser}
-        className="map-toolbar-button"
-        title={myLocationText}
-        aria-label={myLocationText}
+        aria-label="Locate me"
+        title="Locate me"
       >
-        <img 
-          src="/icons/findme.png" 
-          alt="My location"
-          className={`map-toolbar-icon ${theme === 'light' ? 'light' : ''}`}
+        <img
+          src="/icons/findme.png"
+          alt="Locate me"
+          className="map-toolbar-icon"
         />
       </button>
     </div>

@@ -252,51 +252,76 @@
 /* Map Toolbar */
 .map-toolbar {
   position: absolute;
+  top: 16px;
   right: 16px;
-  bottom: 16px;
+  z-index: 2500;
   display: flex;
   flex-direction: column;
   gap: 8px;
-  z-index: 2600;
 }
 
 .map-toolbar-button {
-  width: 44px;
-  height: 44px;
+  width: 48px;
+  height: 48px;
+  border: 2px solid;
   border-radius: 8px;
-  background: rgba(0, 0, 0, 0.85);
-  border: 2px solid rgba(255, 255, 255, 0.4);
-  color: white;
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(10px);
+  cursor: pointer;
+  transition: all 0.2s ease;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.25rem;
-  font-weight: bold;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 }
 
 .map-toolbar-button:hover {
-  background: rgba(0, 0, 0, 0.95);
-  border-color: rgba(255, 255, 255, 0.6);
-  transform: scale(1.05);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
-.map-toolbar-button.zoom-out {
-  font-size: 1.5rem;
+.map-toolbar-button.light {
+  border-color: #e5e7eb;
+  background: rgba(255, 255, 255, 0.95);
+  color: #374151;
+}
+
+.map-toolbar-button.dark {
+  border-color: #4b5563;
+  background: rgba(31, 41, 55, 0.95);
+  color: #f9fafb;
+}
+
+.map-toolbar-button.light:hover {
+  border-color: #d1d5db;
+  background: rgba(255, 255, 255, 1);
+}
+
+.map-toolbar-button.dark:hover {
+  border-color: #6b7280;
+  background: rgba(31, 41, 55, 1);
 }
 
 .map-toolbar-icon {
-  width: 22px;
-  height: 22px;
-  object-fit: contain;
-  filter: brightness(0) invert(1);
+  width: 24px;
+  height: 24px;
+  filter: brightness(0) saturate(100%);
 }
 
-.map-toolbar-icon.light {
-  filter: brightness(0) invert(1);
+.map-toolbar-button.light .map-toolbar-icon {
+  filter: brightness(0) saturate(100%) invert(0.3);
+}
+
+.map-toolbar-button.dark .map-toolbar-icon {
+  filter: brightness(0) saturate(100%) invert(0.9);
+}
+
+.map-toolbar-button.light:hover .map-toolbar-icon {
+  filter: brightness(0) saturate(100%) invert(0.2);
+}
+
+.map-toolbar-button.dark:hover .map-toolbar-icon {
+  filter: brightness(0) saturate(100%) invert(1);
 }
 
 .map-info-panel {
