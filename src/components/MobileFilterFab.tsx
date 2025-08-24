@@ -12,7 +12,6 @@ interface Props {
 
 const MobileFilterFab: React.FC<Props> = ({ lang, selectedMaterials, selectMaterial, theme }) => {
   const [isExpanded, setIsExpanded] = useState(false);
-  const [pos] = useState({ x: 16, y: 20 });
 
   const handleMaterialToggle = (material: string) => {
     selectMaterial(material);
@@ -90,13 +89,7 @@ const MobileFilterFab: React.FC<Props> = ({ lang, selectedMaterials, selectMater
   }, [isExpanded, closePanel]);
 
   return (
-    <div
-      className="mobile-filter-fab"
-      style={{
-        left: pos.x,
-        top: pos.y,
-      }}
-    >
+    <div className="mobile-filter-fab">
       {isExpanded ? (
         <div
           data-filter-panel
