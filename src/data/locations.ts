@@ -52,7 +52,7 @@ export const locations: LocationItem[] = [
     info: "🔋 Metal recycling experts! We buy scrap metal, colored metals, glass, and old batteries. Get paid for your recyclables while helping the environment. We issue official weigh tickets!",
     photo: null,
     icon: "",
-    materials: ["Metals", "Glass", "Batteries"],
+    materials: ["Metals", "Glass"],
     audience: "Business / Bulk only"
   },
   {

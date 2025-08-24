@@ -102,8 +102,7 @@ export const MATERIAL_OPTIONS = [
   'Industrial waste',
   'Plastic',
   'Bottles',
-  'Metals',
-  'Batteries'
+  'Metals'
 ];
 
 export const MATERIAL_ICONS: Record<string, string> = {
@@ -113,7 +112,6 @@ export const MATERIAL_ICONS: Record<string, string> = {
   Glass: '/icons/glass.png',
   Paper: '/icons/paper.png',
   Metals: '/icons/metals.png',
-  Batteries: '/icons/batteries.png',
   'Industrial waste': '/icons/industrial.png',
   'Aluminium cans': '/icons/alucan.png',
   Clothes: '/icons/clothes.png'
@@ -127,7 +125,6 @@ export const MATERIAL_LABELS = {
     Glass: 'Glass',
     Paper: 'Paper',
     Metals: 'Metals',
-    Batteries: 'Batteries',
     'Industrial waste': 'Ind. waste',
     'Aluminium cans': 'Alu. cans',
     Clothes: 'Clothes'
@@ -139,7 +136,6 @@ export const MATERIAL_LABELS = {
     Glass: 'Стекло',
     Paper: 'Бумага',
     Metals: 'Металлы',
-    Batteries: 'Батареи',
     'Industrial waste': 'Пром. отходы',
     'Aluminium cans': 'Алюм. банки',
     Clothes: 'Одежда'
@@ -151,7 +147,6 @@ export const MATERIAL_LABELS = {
     Glass: 'Шыны',
     Paper: 'Қағаз',
     Metals: 'Металдар',
-    Batteries: 'Батареялар',
     'Industrial waste': 'Өнд. қалд.',
     'Aluminium cans': 'Алюм. банкалар',
     Clothes: 'Киім'

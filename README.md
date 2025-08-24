@@ -20,7 +20,7 @@ An interactive web application that helps you find recycling locations in Astana
   - 📄 **Paper** (cardboard, office paper)
   - 🥫 **Metals** (aluminum cans, scrap metal)
   - 🍾 **Glass** (bottles, containers)
-  - 🔋 **Batteries** (lead-acid, household)
+  
   - 🏭 **Industrial Waste** (businesses only)
 
 ### 📱 **Mobile-Friendly Features**
