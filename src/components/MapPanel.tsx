@@ -33,7 +33,7 @@ const MapPanel: React.FC<MapPanelProps> = ({
         onMaterialSelect(material);
       });
     } else {
-      // Select all materials by adding each one
+      // Select all materials by adding each one that's not already selected
       materialOptions.forEach(material => {
         if (!selectedMaterials.includes(material)) {
           onMaterialSelect(material);
