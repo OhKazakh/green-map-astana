@@ -336,7 +336,11 @@ const Mobile: React.FC<Props> = ({
               aria-label="Toggle theme"
               className={`mobile-control-button theme ${theme}`}
             >
-              {theme === 'dark' ? '☀️' : '🌙'}
+              <img
+                src="/icons/theme.png"
+                alt="Theme"
+                className="mobile-control-icon"
+              />
             </button>
             
             <div style={{ position: 'relative' }} data-lang-menu>
