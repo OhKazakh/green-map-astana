@@ -25,27 +25,31 @@
 }
 
 .map-control-button.theme {
-  background: rgba(31, 41, 55, 0.95);
+  background: rgba(31, 41, 55, 0.8);
   color: #fff;
   font-size: 20px;
   line-height: 20px;
+  backdrop-filter: blur(10px);
 }
 
 .map-control-button.theme.dark {
-  background: rgba(255, 255, 255, 0.95);
+  background: rgba(255, 255, 255, 0.8);
   color: #000;
+  backdrop-filter: blur(10px);
 }
 
 .map-control-button.lang {
-  background: rgba(31, 41, 55, 0.95);
+  background: rgba(31, 41, 55, 0.8);
   color: #fff;
   font-size: 14px;
   line-height: 20px;
+  backdrop-filter: blur(10px);
 }
 
 .map-control-button.lang.dark {
-  background: rgba(255, 255, 255, 0.95);
+  background: rgba(255, 255, 255, 0.8);
   color: #000;
+  backdrop-filter: blur(10px);
 }
 
 .map-control-button:hover {
@@ -78,16 +82,18 @@
   height: 40px;
   border-radius: 50%;
   border: none;
-  background: rgba(31, 41, 55, 0.95);
+  background: rgba(31, 41, 55, 0.8);
   color: #fff;
   cursor: pointer;
   font-size: 14px;
   line-height: 20px;
+  backdrop-filter: blur(10px);
 }
 
 .map-control-lang-option.dark {
-  background: rgba(255, 255, 255, 0.95);
+  background: rgba(255, 255, 255, 0.8);
   color: #000;
+  backdrop-filter: blur(10px);
 }
 
 .map-control-lang-option:nth-child(1) {

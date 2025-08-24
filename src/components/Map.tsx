@@ -456,7 +456,13 @@ const Map: React.FC = () => {
   }, [mapState.selectedMaterials]);
 
   const selectMaterial = (m: string) => {
-    if (mapState.selectedMaterials.includes(m)) {
+    if (m === '__SELECT_ALL__') {
+      // Select all materials
+      updateMapState({ selectedMaterials: MATERIAL_OPTIONS });
+    } else if (m === '__CLEAR_ALL__') {
+      // Clear all materials
+      updateMapState({ selectedMaterials: [] });
+    } else if (mapState.selectedMaterials.includes(m)) {
       // Remove material if already selected
       updateMapState({ selectedMaterials: mapState.selectedMaterials.filter(mat => mat !== m) });
     } else {

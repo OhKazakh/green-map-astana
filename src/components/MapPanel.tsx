@@ -29,18 +29,10 @@ const MapPanel: React.FC<MapPanelProps> = ({
   const handleSelectAll = () => {
     if (selectedMaterials.length === materialOptions.length) {
       // If all are selected, deselect all by clearing the array
-      materialOptions.forEach(material => {
-        if (selectedMaterials.includes(material)) {
-          onMaterialSelect(material);
-        }
-      });
+      onMaterialSelect('__CLEAR_ALL__'); // Special signal to clear all
     } else {
-      // Select all materials by adding each one that's not already selected
-      materialOptions.forEach(material => {
-        if (!selectedMaterials.includes(material)) {
-          onMaterialSelect(material);
-        }
-      });
+      // Select all materials by setting the full array
+      onMaterialSelect('__SELECT_ALL__'); // Special signal to select all
     }
   };
 
