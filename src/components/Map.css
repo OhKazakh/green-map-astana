@@ -212,6 +212,14 @@
   object-fit: contain;
 }
 
+.map-panel-material-icon.light {
+  filter: brightness(0) invert(1);
+}
+
+.map-panel-material-icon.dark {
+  filter: brightness(0) invert(0);
+}
+
 .map-panel-material-label {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
   font-size: 14px;
@@ -703,6 +711,10 @@
 
 .mobile-filter-option-icon.light {
   filter: brightness(0) invert(1);
+}
+
+.mobile-filter-option-icon.dark {
+  filter: brightness(0) invert(0);
 }
 
 .mobile-filter-option-input {

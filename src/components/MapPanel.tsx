@@ -49,7 +49,7 @@ const MapPanel: React.FC<MapPanelProps> = ({
               <img
                 src="/icons/all.png"
                 alt="All materials"
-                className="map-panel-material-icon"
+                className={`map-panel-material-icon ${theme}`}
               />
               <span className="map-panel-material-label">
                 {selectAllText}
@@ -71,7 +71,7 @@ const MapPanel: React.FC<MapPanelProps> = ({
                   <img
                     src={materialIcons[material]}
                     alt={label}
-                    className="map-panel-material-icon"
+                    className={`map-panel-material-icon ${theme}`}
                   />
                   <span className="map-panel-material-label">{label}</span>
                 </div>

@@ -124,7 +124,7 @@ const MobileFilterFab: React.FC<Props> = ({ lang, selectedMaterials, selectMater
                 <img 
                   src="/icons/all.png" 
                   alt="Select all"
-                  className="mobile-filter-option-icon"
+                  className={`mobile-filter-option-icon ${theme}`}
                 />
                 <span className="mobile-filter-option-label">
                   {selectAllText}
@@ -146,7 +146,7 @@ const MobileFilterFab: React.FC<Props> = ({ lang, selectedMaterials, selectMater
                     <img 
                       src={MATERIAL_ICONS[material]} 
                       alt={label}
-                      className="mobile-filter-option-icon"
+                      className={`mobile-filter-option-icon ${theme}`}
                     />
                     <span className="mobile-filter-option-label">
                       {label}

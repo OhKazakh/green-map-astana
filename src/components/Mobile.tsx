@@ -328,9 +328,9 @@ const Mobile: React.FC<Props> = ({
               aria-label="Toggle theme"
               className={`mobile-control-button theme ${theme}`}
             >
-              <img
-                src="/icons/icontheme.png"
-                alt="Theme"
+              <img 
+                src="/icons/theme.png" 
+                alt="Theme" 
                 className="mobile-control-icon"
               />
             </button>
