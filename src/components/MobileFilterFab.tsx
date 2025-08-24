@@ -1,8 +1,7 @@
 import React, { useState, useCallback } from 'react';
 import { MATERIAL_OPTIONS, MATERIAL_ICONS, MATERIAL_LABELS, STRINGS } from '../constants/mapConstants';
 import './Map.css';
-
-type Lang = 'en' | 'ru' | 'kz';
+import { Lang } from '../data/translations';
 
 interface Props {
   lang: Lang;

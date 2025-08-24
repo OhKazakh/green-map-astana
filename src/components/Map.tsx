@@ -1,13 +1,13 @@
-import React, { useState, useRef, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useRef } from 'react';
 import { GoogleMap, LoadScript, Marker, OverlayView } from '@react-google-maps/api';
-
+import './Map.css';
 import { MAP_CONSTANTS, MATERIAL_OPTIONS, MATERIAL_ICONS, MATERIAL_LABELS, STRINGS, LocationItem } from '../constants/mapConstants';
+import { Lang } from '../data/translations';
 import MapControls from './MapControls';
 import MapPanel from './MapPanel';
 import MapMarkers from './MapMarkers';
 import MapInfoPanel from './MapInfoPanel';
 import MapToolbar from './MapToolbar';
-import './Map.css';
 
 const center = MAP_CONSTANTS.MAP.CENTER;
 
@@ -383,8 +383,6 @@ const locations: LocationItem[] = [
     audience: "Public drop-off"
   }
 ];
-
-type Lang = 'en' | 'ru' | 'kz';
 
 const Map: React.FC = () => {
   const [hovered, setHovered] = useState<number | null>(null);

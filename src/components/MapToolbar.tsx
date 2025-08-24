@@ -1,6 +1,7 @@
 import React from 'react';
 import './Map.css';
 
+// Map toolbar component
 interface MapToolbarProps {
   theme: 'dark' | 'light';
   isSatellite: boolean;

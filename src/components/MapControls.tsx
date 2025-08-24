@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import './Map.css';
+import { Lang } from '../data/translations';
 
-type Lang = 'en' | 'ru' | 'kz';
-
+// Map controls component
 interface MapControlsProps {
   theme: 'dark' | 'light';
   lang: Lang;

@@ -2,9 +2,10 @@ import React from 'react';
 import { Marker, OverlayView } from '@react-google-maps/api';
 import { locationTranslations } from '../data/translations';
 import { LocationItem } from '../constants/mapConstants';
+import { Lang } from '../data/translations';
+import './Map.css';
 
-type Lang = 'en' | 'ru' | 'kz';
-
+// Map markers component
 interface MapMarkersProps {
   locations: LocationItem[];
   filteredLocations: LocationItem[];

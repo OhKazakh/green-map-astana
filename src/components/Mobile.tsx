@@ -5,7 +5,7 @@ import { LocationItem, STRINGS } from '../constants/mapConstants';
 import MobileFilterFab from './MobileFilterFab';
 import './Map.css';
 
-// Constants from Map.tsx
+// Constants from Map.tsx - updated
 const center = {
   lat: 51.125417,
   lng: 71.433722

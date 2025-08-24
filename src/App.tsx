@@ -1,31 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
-
 import Map from './components/Map';
 import Mobile from './components/Mobile';
+import { useIsMobile } from './hooks/useIsMobile';
+import { Lang } from './data/translations';
 import { locations as locationsData } from './data/locations';
-
-const useIsMobile = () => {
-  const [mobile, setMobile] = useState(false);
-  
-  useEffect(() => {
-    const mediaQuery = window.matchMedia('(max-width: 768px)');
-    
-    const updateMobile = (e: MediaQueryListEvent | MediaQueryList) => {
-      setMobile(e.matches);
-    };
-    
-    updateMobile(mediaQuery);
-    
-    mediaQuery.addEventListener('change', updateMobile);
-    
-    return () => {
-      mediaQuery.removeEventListener('change', updateMobile);
-    };
-  }, []);
-  
-  return mobile;
-};
 
 function App() {
   const isMobile = useIsMobile();

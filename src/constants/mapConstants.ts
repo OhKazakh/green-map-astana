@@ -1,3 +1,4 @@
+// Map constants and configuration
 export const MAP_CONSTANTS = {
   PANEL: {
     MARGIN: 8,

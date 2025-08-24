@@ -1,9 +1,10 @@
 import React from 'react';
 import { locationTranslations } from '../data/translations';
 import { LocationItem } from '../constants/mapConstants';
+import { Lang } from '../data/translations';
+import './Map.css';
 
-type Lang = 'en' | 'ru' | 'kz';
-
+// Map info panel component
 interface MapInfoPanelProps {
   selectedLocation: number | null;
   isPanelClosing: boolean;
