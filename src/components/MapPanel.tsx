@@ -26,26 +26,6 @@ const MapPanel: React.FC<MapPanelProps> = ({
     onMaterialSelect(material);
   };
 
-  const handleSelectAll = () => {
-    if (selectedMaterials.length === materialOptions.length) {
-      // If all are selected, deselect all by clearing the array
-      materialOptions.forEach(material => {
-        if (selectedMaterials.includes(material)) {
-          onMaterialSelect(material);
-        }
-      });
-    } else {
-      // Select all materials by adding each one
-      materialOptions.forEach(material => {
-        if (!selectedMaterials.includes(material)) {
-          onMaterialSelect(material);
-        }
-      });
-    }
-  };
-
-  const allSelected = selectedMaterials.length === materialOptions.length;
-
   return (
     <div className={`map-panel ${theme}`}>
       <div className="map-panel-header">
@@ -56,22 +36,6 @@ const MapPanel: React.FC<MapPanelProps> = ({
       
       <div className="map-panel-content">
         <div className="map-panel-materials">
-          <div 
-            className={`map-panel-material-option ${allSelected ? 'selected' : ''} ${theme} all-option`}
-            onClick={handleSelectAll}
-          >
-            <div className="map-panel-material-content">
-              <img
-                src="/icons/all.png"
-                alt="All materials"
-                className="map-panel-material-icon"
-              />
-              <span className="map-panel-material-label">
-                {allSelected ? 'Deselect all' : 'Select all'}
-              </span>
-            </div>
-          </div>
-          
           {materialOptions.map((material) => {
             const isSelected = selectedMaterials.includes(material);
             const label = materialLabels[lang][material] || material;
