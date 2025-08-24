@@ -264,7 +264,7 @@
 }
 
 .map-panel-option-icon.light {
-  filter: brightness(0) invert(1);
+  filter: brightness(0) invert(0);
 }
 
 .map-panel-option-input {
@@ -337,19 +337,19 @@
 }
 
 .map-toolbar-button.light .map-toolbar-icon {
-  filter: brightness(0) saturate(100%) invert(1);
+  filter: brightness(0) saturate(100%) invert(0);
 }
 
 .map-toolbar-button.dark .map-toolbar-icon {
-  filter: brightness(0) saturate(100%) invert(0.3);
-}
-
-.map-toolbar-button.light:hover .map-toolbar-icon {
   filter: brightness(0) saturate(100%) invert(1);
 }
 
+.map-toolbar-button.light:hover .map-toolbar-icon {
+  filter: brightness(0) saturate(100%) invert(0);
+}
+
 .map-toolbar-button.dark:hover .map-toolbar-icon {
-  filter: brightness(0) saturate(100%) invert(0.2);
+  filter: brightness(0) saturate(100%) invert(1);
 }
 
 .map-info-panel {
@@ -702,7 +702,7 @@
 }
 
 .mobile-filter-option-icon.light {
-  filter: brightness(0) invert(1);
+  filter: brightness(0) invert(0);
 }
 
 .mobile-filter-option-input {
@@ -741,7 +741,7 @@
 }
 
 .mobile-filter-button-icon.light {
-  filter: brightness(0) invert(1);
+  filter: brightness(0) invert(0);
 }
 
 .mobile-container {
@@ -821,11 +821,11 @@
 }
 
 .mobile-control-button.theme .mobile-control-icon {
-  filter: brightness(0) invert(1);
+  filter: brightness(0) invert(0);
 }
 
 .mobile-control-button.theme.dark .mobile-control-icon {
-  filter: brightness(0) invert(0);
+  filter: brightness(0) invert(1);
 }
 
 .mobile-lang-menu {
@@ -1010,24 +1010,26 @@
   width: 20px;
   height: 20px;
   object-fit: contain;
-  filter: brightness(0) invert(1);
 }
 
 .mobile-map-control-button.light .mobile-map-control-icon {
-  filter: brightness(0) invert(1);
+  filter: brightness(0) invert(0);
 }
 
 .mobile-map-control-button.dark .mobile-map-control-icon {
-  filter: brightness(0) invert(0);
+  filter: brightness(0) invert(1);
 }
 
 .map-control-button.theme img {
   width: 20px;
   height: 20px;
   object-fit: contain;
-  filter: brightness(0) invert(1);
+}
+
+.map-control-button.theme img {
+  filter: brightness(0) invert(0);
 }
 
 .map-control-button.theme.dark img {
-  filter: brightness(0) invert(0);
+  filter: brightness(0) invert(1);
 }
