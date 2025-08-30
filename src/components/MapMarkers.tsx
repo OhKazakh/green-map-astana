@@ -47,13 +47,11 @@ const MapMarkers: React.FC<MapMarkersProps> = ({
               scale: id === selectedLocation ? 10 : 6,
               strokeWeight: id === selectedLocation ? 4 : 2,
               fillColor:
-                id === selectedLocation
-                  ? (theme === 'dark' ? '#ff6b6b' : '#d32f2f')
-                  : (location.audience === "Business / Bulk only"
-                      ? (theme === 'dark' ? '#ff8f00' : '#e65100')
-                      : (theme === 'dark' ? '#3ddc84' : '#2e7d32')),
+                location.audience === "Business / Bulk only"
+                  ? (theme === 'dark' ? '#ff8f00' : '#e65100')
+                  : (theme === 'dark' ? '#3ddc84' : '#2e7d32'),
               fillOpacity: 1,
-              strokeColor: id === selectedLocation ? '#ffffff' : '#ffffff',
+              strokeColor: '#ffffff',
             }}
             onMouseOver={() => onMarkerHover(id)}
             onMouseOut={onMarkerLeave}
