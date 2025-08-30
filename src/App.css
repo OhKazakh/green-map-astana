@@ -156,10 +156,10 @@ h1 {
   bottom: 0;
   background: rgba(0, 0, 0, 0.1);
   display: flex;
-  align-items: center;
-  justify-content: center;
+  align-items: flex-start;
+  justify-content: flex-start;
   z-index: 1000;
-  padding: 20px 160px 20px 20px;
+  padding: 80px 20px 20px 20px;
 }
 
 .info-content {
@@ -172,11 +172,11 @@ h1 {
   overflow-y: auto;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
   border: 1px solid rgba(255, 255, 255, 0.2);
-  margin: 0 auto;
+  margin: 0;
   position: relative;
-  left: 50%;
-  transform: translateX(-50%);
-  margin-right: 200px;
+  left: 0;
+  transform: none;
+  margin-right: 0;
   backdrop-filter: blur(15px);
 }
 

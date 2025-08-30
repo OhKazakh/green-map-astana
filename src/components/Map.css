@@ -1,3 +1,22 @@
+.map-selected-marker-pulse {
+  width: 40px;
+  height: 40px;
+  border: 3px solid #ff6b6b;
+  border-radius: 50%;
+  background: transparent;
+  animation: selectedMarkerPulse 1.5s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 1000;
+}
+
+.map-selected-marker-pulse.light {
+  border-color: #d32f2f;
+}
+
+.map-selected-marker-pulse.dark {
+  border-color: #ff6b6b;
+}
+
 .map-container {
   position: relative;
   width: 100vw;
@@ -291,7 +310,8 @@
 
 .map-toolbar-button {
   width: 48px;
-  height: 48px;
+  height: auto;
+  min-height: 40px;
   border: 2px solid;
   border-radius: 8px;
   background: rgba(31, 41, 55, 0.95);
@@ -528,6 +548,21 @@
   100% {
     opacity: 1;
     transform: scale(1) translateX(0);
+  }
+}
+
+@keyframes selectedMarkerPulse {
+  0% { 
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% { 
+    transform: scale(1.2);
+    opacity: 0.8;
+  }
+  100% { 
+    transform: scale(1);
+    opacity: 1;
   }
 }
 

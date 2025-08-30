@@ -44,14 +44,16 @@ const MapMarkers: React.FC<MapMarkersProps> = ({
             position={location.position}
             icon={{
               path: (window as any).google?.maps?.SymbolPath?.CIRCLE || 0,
-              scale: 6,
-              strokeWeight: 2,
+              scale: id === selectedLocation ? 10 : 6,
+              strokeWeight: id === selectedLocation ? 4 : 2,
               fillColor:
-                location.audience === "Business / Bulk only"
-                  ? (theme === 'dark' ? '#ff8f00' : '#e65100')
-                  : (theme === 'dark' ? '#3ddc84' : '#2e7d32'),
+                id === selectedLocation
+                  ? (theme === 'dark' ? '#ff6b6b' : '#d32f2f')
+                  : (location.audience === "Business / Bulk only"
+                      ? (theme === 'dark' ? '#ff8f00' : '#e65100')
+                      : (theme === 'dark' ? '#3ddc84' : '#2e7d32')),
               fillOpacity: 1,
-              strokeColor: '#ffffff',
+              strokeColor: id === selectedLocation ? '#ffffff' : '#ffffff',
             }}
             onMouseOver={() => onMarkerHover(id)}
             onMouseOut={onMarkerLeave}
@@ -96,6 +98,15 @@ const MapMarkers: React.FC<MapMarkersProps> = ({
               );
             })()}
           </div>
+        </OverlayView>
+      )}
+
+      {selectedLocation !== null && (
+        <OverlayView
+          position={locations.find(l => l.id === selectedLocation)!.position}
+          mapPaneName={OverlayView.OVERLAY_MOUSE_TARGET}
+        >
+          <div className={`map-selected-marker-pulse ${theme}`}></div>
         </OverlayView>
       )}
     </>
