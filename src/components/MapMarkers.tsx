@@ -100,15 +100,6 @@ const MapMarkers: React.FC<MapMarkersProps> = ({
           </div>
         </OverlayView>
       )}
-
-      {selectedLocation !== null && (
-        <OverlayView
-          position={locations.find(l => l.id === selectedLocation)!.position}
-          mapPaneName={OverlayView.OVERLAY_MOUSE_TARGET}
-        >
-          <div className={`map-selected-marker-pulse ${theme}`}></div>
-        </OverlayView>
-      )}
     </>
   );
 };
